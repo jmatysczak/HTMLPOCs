@@ -1,0 +1,28 @@
+<!doctype html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>CoverFlow - CSS Only</title>
+        <style>
+            .item {
+                display: inline-block;
+                height: 240px;
+                width: 160px;
+                background-repeat: no-repeat;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="container">
+
+        </div>
+        <script>
+            var items = "";
+            for(var i = 1; i <= 16; i++) {
+                items += "<a href='#' class='item' style='background-image:url(images/" + ((i <= 9 ? "0" : "") + i) + ".jpg)'></a>"
+            }
+            document.getElementById("container").innerHTML = items;
+        </script>
+    </body>
+</html>
