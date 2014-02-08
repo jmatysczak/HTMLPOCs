@@ -51,7 +51,7 @@
         <script>
             var items = "";
             for(var i = 1; i <= 16; i++) {
-                items += "<a href='#' class='single-perspective' style='background-image:url(images/" + ((i <= 9 ? "0" : "") + i) + ".jpg)' tabindex='1'></a>"
+                items += "<a href='#' class='single-perspective' style='background-image:url(images/" + i + ".jpg)' tabindex='1'></a>"
             }
             document.getElementById("single-perspective").innerHTML = items;
         </script>
