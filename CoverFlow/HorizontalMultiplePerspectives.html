@@ -27,13 +27,16 @@
                 /* The top and bottom margins don't matter. The left and right margins have to be negative so the covers overlap. */
                 margin: 0 -50px;
                 transition: margin 1s;
+                transform: perspective(800px);
                 -webkit-transform: perspective(800px);
+                transform-style: preserve-3d;
                 -webkit-transform-style: preserve-3d;
             }
             span {
                 /* Make the changes to rotation and margin transition smoothly. */
                 transition: all 1s;
                 /* By default all of the covers' left edge are closer than their right edge. */
+                transform: rotateY(45deg);
                 -webkit-transform: rotateY(45deg);
             }
             a:focus {
@@ -45,6 +48,7 @@
             }
             a:focus>span {
                 /* When a cover is selected (gets focus) remove the rotation and bring closer to the view a little. */
+                transform: rotateY(0deg) translateZ(100px);
                 -webkit-transform: rotateY(0deg) translateZ(100px);
             }
             a:focus~a {
@@ -52,6 +56,7 @@
             }
             a:focus~a>span {
                 /* All covers to the right of the selected cover get rotated so that their right edge is closer than their left edge. */
+                transform: rotateY(-45deg);
                 -webkit-transform: rotateY(-45deg);
             }
         </style>
