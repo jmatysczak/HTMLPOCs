@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <title>CoverFlow - CSS Only</title>
         <style>
-            #container {
+            #single-perspective {
                 /* This is just to get some white space on the top and left of the covers. Just trying to keep it simple. */
                 margin: 50px 150px;
                 /*
@@ -17,7 +17,7 @@
                 /* This enables the 3D look. */
                 -webkit-transform-style: preserve-3d;
             }
-            .item {
+            .single-perspective {
                 /* These are just to diplay the covers with the correct sizes. */
                 background-repeat: no-repeat;
                 display: inline-block;
@@ -31,7 +31,7 @@
                 /* By default all of the covers' left edge are closer than their right edge. */
                 -webkit-transform: rotateY(45deg);
             }
-            .item:focus {
+            .single-perspective:focus {
                 /*
                 When a cover is selected (gets focus) give it a positive left and right margin so it has some space.
                 If you use "auto" for the left and right margin there is no smooth transition (on Chrome at least).
@@ -40,22 +40,20 @@
                 /* When a cover is selected (gets focus) remove the rotation and bring closer to the view a little. */
                 -webkit-transform: rotateY(0deg) translateZ(100px);
             }
-            .item:focus~.item {
+            .single-perspective:focus~.single-perspective {
                 /* All covers to the right of the selected cover get rotated so that their right edge is closer than their left edge. */
                 -webkit-transform: rotateY(-45deg);
             }
         </style>
     </head>
     <body>
-        <div id="container">
-
-        </div>
+        <div id="single-perspective"></div>
         <script>
             var items = "";
             for(var i = 1; i <= 16; i++) {
-                items += "<a href='#' class='item' style='background-image:url(images/" + ((i <= 9 ? "0" : "") + i) + ".jpg)' tabindex='1'></a>"
+                items += "<a href='#' class='single-perspective' style='background-image:url(images/" + ((i <= 9 ? "0" : "") + i) + ".jpg)' tabindex='1'></a>"
             }
-            document.getElementById("container").innerHTML = items;
+            document.getElementById("single-perspective").innerHTML = items;
         </script>
     </body>
 </html>
