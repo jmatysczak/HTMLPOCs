@@ -6,25 +6,42 @@
         <title>CoverFlow - CSS Only</title>
         <style>
             #container {
+                /* This is just to get some white space on the top and left of the covers. Just trying to keep it simple. */
                 margin: 50px 150px;
-                -webkit-perspective: 600px;
+                /*
+                This controls how far away the covers are from the viewer.
+                You'll notice that the covers in the middle look good and the ones on the ends look a little skewed.
+                This is due to there being only one perspective.
+                */
+                -webkit-perspective: 800px;
+                /* This enables the 3D look. */
                 -webkit-transform-style: preserve-3d;
             }
             .item {
+                /* These are just to diplay the covers with the correct sizes. */
                 background-repeat: no-repeat;
                 display: inline-block;
                 height: 240px;
                 width: 160px;
 
-                margin: auto -50px;
+                /* The top and bottom margins don't matter. The left and right margins have to be negative so the covers overlap. */
+                margin: 0 -50px;
+                /* Make the changes to rotation and margin transition smoothly. */
                 transition: all 1s;
+                /* By default all of the covers' left edge are closer than their right edge. */
                 -webkit-transform: rotateY(45deg);
             }
             .item:focus {
+                /*
+                When a cover is selected (gets focus) give it a positive left and right margin so it has some space.
+                If you use "auto" for the left and right margin there is no smooth transition (on Chrome at least).
+                */
                 margin: 0 20px;
+                /* When a cover is selected (gets focus) remove the rotation and bring closer to the view a little. */
                 -webkit-transform: rotateY(0deg) translateZ(100px);
             }
             .item:focus~.item {
+                /* All covers to the right of the selected cover get rotated so that their right edge is closer than their left edge. */
                 -webkit-transform: rotateY(-45deg);
             }
         </style>
