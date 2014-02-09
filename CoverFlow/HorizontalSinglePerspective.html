@@ -14,8 +14,8 @@
                 This is due to there being only one perspective. So the effect on the ends doesn't look as good because of the perspective.
                 Also, I don't see a difference between the below line and "-webkit-perspective: 800px;"
                 */
-                transform: perspective(800px);
-                -webkit-transform: perspective(800px);
+                perspective: 800px;
+                -webkit-perspective: 800px;
                 /* This enables the 3D look. */
                 transform-style: preserve-3d;
                 -webkit-transform-style: preserve-3d;
@@ -71,9 +71,9 @@
               combination of the side and either the front or the back.
         </div>
         <div id="single-static-perspective" class="cover-container"></div>
-        <strong>Single, variable perspective; Javascript used to change the perspective</strong>
+        <strong>Single, variable perspective; Javascript is used to change the perspective</strong>
         <div>
-            - Same as above except that the perspective is changed to "match" the cover with focus.<br/>
+            - Mostly the same as above except that the perspective positioned directly in front of the cover with focus.<br/>
         </div>
         <div id="single-variable-perspective" class="cover-container"></div>
         <script>
@@ -82,8 +82,23 @@
             for(var i = 1; i <= imageCount; i++) {
                 items += "<a href='#' class='cover' style='background-image:url(images/" + i + ".jpg)' tabindex='1'></a>"
             }
+
             document.getElementById("single-static-perspective").innerHTML = items;
-            document.getElementById("single-variable-perspective").innerHTML = items;
+
+            var singleVariablePerspective = document.getElementById("single-variable-perspective"),
+                singleVariablePerspectiveCovers = singleVariablePerspective.getElementsByClassName("cover"),
+                coverFocusHandler = function(e) {
+                    var cover = e.target;
+                    console.log(cover);
+                    if(cover.tagName === "A") {
+                        var container = cover.parentNode;
+                        var indexOfCover = Array.prototype.indexOf.call(container.childNodes, cover);
+                        console.log(indexOfCover);
+                        container.style.webkitPerspectiveOriginX = (indexOfCover / imageCount * 100) + "%";
+                    }
+                };
+            singleVariablePerspective.innerHTML = items;
+            for(var i = singleVariablePerspectiveCovers.length; i-- > 0; ) singleVariablePerspectiveCovers[i].addEventListener("focus", coverFocusHandler, false);
         </script>
     </body>
 </html>
