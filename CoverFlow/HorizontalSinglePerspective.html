@@ -61,7 +61,7 @@
               of the cover.
         </div>
         <br/>
-        <strong>Single, static perspective and no Javascript</strong>
+        <strong>Single, static perspective; no Javascript</strong>
         <div>
             - This coverflow has a single, static perspective and uses no Javascript for the effect.<br/>
             - You'll notice that the selected cover has increasing spacing on the side closer to
@@ -70,14 +70,20 @@
               only the side of the car can be seen. As the car approaches or departs, you see a
               combination of the side and either the front or the back.
         </div>
-        <div id="single-static-perspective-no-js" class="cover-container"></div>
+        <div id="single-static-perspective" class="cover-container"></div>
+        <strong>Single, variable perspective; Javascript used to change the perspective</strong>
+        <div>
+            - Same as above except that the perspective is changed to "match" the cover with focus.<br/>
+        </div>
+        <div id="single-variable-perspective" class="cover-container"></div>
         <script>
             var items = "",
                 imageCount = 16;
             for(var i = 1; i <= imageCount; i++) {
                 items += "<a href='#' class='cover' style='background-image:url(images/" + i + ".jpg)' tabindex='1'></a>"
             }
-            document.getElementById("single-static-perspective-no-js").innerHTML = items;
+            document.getElementById("single-static-perspective").innerHTML = items;
+            document.getElementById("single-variable-perspective").innerHTML = items;
         </script>
     </body>
 </html>
