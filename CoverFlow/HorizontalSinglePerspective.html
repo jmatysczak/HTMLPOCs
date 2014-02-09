@@ -50,6 +50,10 @@
                 transform: rotateY(-45deg);
                 -webkit-transform: rotateY(-45deg);
             }
+
+            #single-variable-perspective {
+                transition: all 1s;
+            }
         </style>
     </head>
     <body>
@@ -98,7 +102,7 @@
                     // Set perspective in Firefox.
                     container.style.perspectiveOrigin = perspectiveX;
                     // Set perspective in Chrome.
-                    container.style.webkitPerspectiveOriginX = perspectiveX;
+                    container.style.webkitPerspectiveOrigin = perspectiveX;
                 };
             // Create the covers for the single, variable perspective example.
             singleVariablePerspective.innerHTML = coversHTML;
