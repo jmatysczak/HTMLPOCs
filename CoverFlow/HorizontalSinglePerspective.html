@@ -53,6 +53,23 @@
         </style>
     </head>
     <body>
+        <strong>Browser Notes</strong>
+        <div>
+            - Only tested on Firefox 26.0 and Chrome 32.<br/>
+            - Chrome does't appear to calculate the anchor area correctly when it is rotated. The
+              edge "further away" from the view has an inactive/dead area between it and the center
+              of the cover.
+        </div>
+        <br/>
+        <strong>Single, static perspective and no Javascript</strong>
+        <div>
+            - This coverflow has a single, static perspective and uses no Javascript for the effect.<br/>
+            - You'll notice that the selected cover has increasing spacing on the side closer to
+              the center as the position of the cover gets further from the center.<br/>
+            - This is the same effect as watching a car go by. When it is directly in front of you
+              only the side of the car can be seen. As the car approaches or departs, you see a
+              combination of the side and either the front or the back.
+        </div>
         <div id="single-static-perspective-no-js" class="cover-container"></div>
         <script>
             var items = "";
