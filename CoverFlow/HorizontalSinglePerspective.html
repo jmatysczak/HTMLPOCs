@@ -73,7 +73,7 @@
         <div id="single-static-perspective" class="cover-container"></div>
         <strong>Single, variable perspective; Javascript is used to change the perspective</strong>
         <div>
-            - Mostly the same as above except that the perspective positioned directly in front of the cover with focus.<br/>
+            - Mostly the same as above except that the perspective positioned directly in front of the cover with focus.
         </div>
         <div id="single-variable-perspective" class="cover-container"></div>
         <script>
@@ -89,11 +89,10 @@
                 singleVariablePerspectiveCovers = singleVariablePerspective.getElementsByClassName("cover"),
                 coverFocusHandler = function(e) {
                     var cover = e.target;
-                    console.log(cover);
                     if(cover.tagName === "A") {
-                        var container = cover.parentNode;
-                        var indexOfCover = Array.prototype.indexOf.call(container.childNodes, cover);
-                        console.log(indexOfCover);
+                        var container = cover.parentNode,
+                            indexOfCover = Array.prototype.indexOf.call(container.childNodes, cover);
+                        container.style.perspectiveOrigin = (indexOfCover / imageCount * 100) + "%";
                         container.style.webkitPerspectiveOriginX = (indexOfCover / imageCount * 100) + "%";
                     }
                 };
