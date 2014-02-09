@@ -72,8 +72,9 @@
         </div>
         <div id="single-static-perspective-no-js" class="cover-container"></div>
         <script>
-            var items = "";
-            for(var i = 1; i <= 16; i++) {
+            var items = "",
+                imageCount = 16;
+            for(var i = 1; i <= imageCount; i++) {
                 items += "<a href='#' class='cover' style='background-image:url(images/" + i + ".jpg)' tabindex='1'></a>"
             }
             document.getElementById("single-static-perspective-no-js").innerHTML = items;
