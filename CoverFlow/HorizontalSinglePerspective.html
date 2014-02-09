@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <title>CoverFlow - CSS Only</title>
         <style>
-            #single-perspective {
+            .cover-container {
                 /* This is just to get some white space on the top and left of the covers. Just trying to keep it simple. */
                 margin: 50px 150px;
                 /*
@@ -20,7 +20,7 @@
                 transform-style: preserve-3d;
                 -webkit-transform-style: preserve-3d;
             }
-            .single-perspective {
+            .cover {
                 /* These are just to diplay the covers with the correct sizes. */
                 background-repeat: no-repeat;
                 display: inline-block;
@@ -35,7 +35,7 @@
                 transform: rotateY(45deg);
                 -webkit-transform: rotateY(45deg);
             }
-            .single-perspective:focus {
+            .cover:focus {
                 /*
                 When a cover is selected (gets focus) give it a positive left and right margin so it has some space.
                 If you use "auto" for the left and right margin there is no smooth transition (on Chrome at least).
@@ -45,7 +45,7 @@
                 transform: rotateY(0deg) translateZ(100px);
                 -webkit-transform: rotateY(0deg) translateZ(100px);
             }
-            .single-perspective:focus~.single-perspective {
+            .cover:focus~.cover {
                 /* All covers to the right of the selected cover get rotated so that their right edge is closer than their left edge. */
                 transform: rotateY(-45deg);
                 -webkit-transform: rotateY(-45deg);
@@ -53,13 +53,13 @@
         </style>
     </head>
     <body>
-        <div id="single-perspective"></div>
+        <div id="single-static-perspective-no-js" class="cover-container"></div>
         <script>
             var items = "";
             for(var i = 1; i <= 16; i++) {
-                items += "<a href='#' class='single-perspective' style='background-image:url(images/" + i + ".jpg)' tabindex='1'></a>"
+                items += "<a href='#' class='cover' style='background-image:url(images/" + i + ".jpg)' tabindex='1'></a>"
             }
-            document.getElementById("single-perspective").innerHTML = items;
+            document.getElementById("single-static-perspective-no-js").innerHTML = items;
         </script>
     </body>
 </html>
