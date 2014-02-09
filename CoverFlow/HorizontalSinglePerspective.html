@@ -99,6 +99,9 @@
                     var cover = e.target,
                         container = cover.parentNode,
                         indexOfCover = Array.prototype.indexOf.call(container.childNodes, cover),
+                        // For this example, this isn't a perfect calculation. The width of the container is greater than the midth of the covers.
+                        // But it is better than using the cover's actual bounding rectangle.
+                        // This is probably going to vary depending on the situation.
                         perspectiveX = (indexOfCover / coverCount * 100) + "%";
                     // Set perspective in Firefox.
                     container.style.perspectiveOrigin = perspectiveX;
