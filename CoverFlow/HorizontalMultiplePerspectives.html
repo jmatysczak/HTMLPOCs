@@ -5,19 +5,12 @@
         <meta charset="utf-8">
         <title>CoverFlow - CSS Only</title>
         <style>
-            #multiple-perspective {
-                /* This is just to get some white space on the top and left of the covers. Just trying to keep it simple. */
+            #multiple-perspectives {
+                /* This is just to get some white space on the top and left of the covers. Specifically trying to not be fancy here. */
                 margin: 50px 150px;
-                /*
-                This controls how far away the covers are from the viewer.
-                You'll notice that the covers in the middle look good and the ones on the ends look a little skewed.
-                This is due to there being only one perspective. So the effect on the ends doesn't look as good because of the perspective.
-                Also, I don't see a difference between the below line and "-webkit-perspective: 800px;"
-                */
-                /* This enables the 3D look. */
             }
             a, span {
-                /* These are just to diplay the covers with the correct sizes. */
+                /* These are just to diplay the covers with the correct size. */
                 background-repeat: no-repeat;
                 display: inline-block;
                 height: 240px;
@@ -26,11 +19,14 @@
             a {
                 /* The top and bottom margins don't matter. The left and right margins have to be negative so the covers overlap. */
                 margin: 0 -50px;
-                transition: margin 1s;
-                transform: perspective(800px);
-                -webkit-transform: perspective(800px);
+                /* This controls how far away the covers are from the viewer. */
+                perspective: 800px;
+                -webkit-perspective: 800px;
+                /* This enables the 3D look. */
                 transform-style: preserve-3d;
                 -webkit-transform-style: preserve-3d;
+                /* Cause the change in margin to slide instead of jump. */
+                transition: margin 1s;
             }
             span {
                 /* Make the changes to rotation and margin transition smoothly. */
@@ -62,13 +58,11 @@
         </style>
     </head>
     <body>
-        <div id="multiple-perspective"></div>
+        <div id="multiple-perspectives"></div>
         <script>
-            var items = "";
-            for(var i = 1; i <= 16; i++) {
-                items += "<a href='#' tabindex='1' style='z-index:-" + i + ";'><span style='background-image:url(images/" + i + ".jpg);'></span></a>"
-            }
-            document.getElementById("multiple-perspective").innerHTML = items;
+            var coversHTML = "";
+            for(var i = 1; i <= 16; i++) coversHTML += "<a href='#' tabindex='1' style='z-index:-" + i + ";'><span style='background-image:url(images/" + i + ".jpg);'></span></a>";
+            document.getElementById("multiple-perspectives").innerHTML = coversHTML;
         </script>
     </body>
 </html>
