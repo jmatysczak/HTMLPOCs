@@ -31,19 +31,23 @@
             span {
                 /* Make the changes to rotation and margin transition smoothly. */
                 transition: all 1s;
-                /* By default all of the covers' left edge are closer than their right edge. */
+                /* By default a cover's left edge is closer than its right edge. */
                 transform: rotateY(45deg);
                 -webkit-transform: rotateY(45deg);
             }
             a:focus {
                 /*
-                When a cover is selected (gets focus) give it a positive left and right margin so it has some space.
+                When a cover is selected (gets focus by either clicking it or tabbing to it) give it a positive left and right margin so it has some space.
+                The exact value is a matter of personal preference.
                 If you use "auto" for the left and right margin there is no smooth transition (on Chrome at least).
                 */
                 margin: 0 25px;
             }
             a:focus>span {
-                /* When a cover is selected (gets focus) remove the rotation and bring closer to the view a little. */
+                /*
+                When a cover is selected (gets focus by either clicking it or tabbing to it) remove the rotation and bring it closer to the viewer a little.
+                How much closer the cover is brought to the user is a matter of preference.
+                */
                 transform: rotateY(0deg) translateZ(100px);
                 -webkit-transform: rotateY(0deg) translateZ(100px);
             }
