@@ -53,7 +53,13 @@
             }
             a:focus~a {
                 /*
-                TODO
+                By default the covers are positioned statically. This means the z order specified on the anchors is ignored.
+                This means that earlier covers are rendered behind later ones.
+                This is perfect for covers that are to the left of the selected cover.
+                For covers that are to the right of the selected cover, which is what this selector targets, this positions them relatively.
+                Relatively positioned items are rendered according to their z-index. Which is set in decreasing order left to right.
+                Because no position styles (left, right, top, or bottom) were set, the covers are positioned in the normal flow.
+                So, in short, this style plus the anchor z-index is what enables the covers to the right of the selected cover to have the correct visual z position.
                 */
                 position: relative;
             }
