@@ -107,14 +107,15 @@
             singleVariablePerspective.innerHTML = coversHTML;
             // Setup the single, variable perspective focus handler.
             var singleVariablePerspectiveCovers = singleVariablePerspective.getElementsByClassName("cover"),
+                singleVariablePerspectiveOffset = singleVariablePerspective.lastChild.offsetWidth / 2,
                 singleVariablePerspectiveMultiplier = singleVariablePerspective.lastChild.offsetLeft / coverCount,
                 singleVariablePerspectiveCoverFocusHandler = function(e) {
                     // When a cover gets focus, update its container's horizontal perspective origin.
                     var cover = e.target,
                         indexOfCover = Array.prototype.indexOf.call(singleVariablePerspectiveCovers, cover),
-                        horizontalPerspectiveOrigin = (indexOfCover * singleVariablePerspectiveMultiplier) + "px";
-                    singleVariablePerspective.style.perspectiveOrigin = horizontalPerspectiveOrigin;
-                    singleVariablePerspective.style.webkitPerspectiveOrigin = horizontalPerspectiveOrigin;
+                        perspectiveOriginX = (singleVariablePerspectiveOffset + (indexOfCover * singleVariablePerspectiveMultiplier)) + "px";
+                    singleVariablePerspective.style.perspectiveOrigin = perspectiveOriginX;
+                    singleVariablePerspective.style.webkitPerspectiveOrigin = perspectiveOriginX;
                 };
             // Add the focus event handler to all of the covers.
             for(var i = singleVariablePerspectiveCovers.length; i-- > 0; ) singleVariablePerspectiveCovers[i].addEventListener("focus", singleVariablePerspectiveCoverFocusHandler, false);
