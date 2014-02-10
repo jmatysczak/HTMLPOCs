@@ -3,16 +3,15 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title>CoverFlow - CSS Only</title>
+        <title>CoverFlow</title>
         <style>
             .cover-container {
-                /* This is just to get some white space on the top and left of the covers. Just trying to keep it simple. */
+                /* This is just to get some white space on the top and left of the covers. Specifically trying to not be fancy here. */
                 margin: 50px 150px;
                 /*
                 This controls how far away the covers are from the viewer.
-                You'll notice that the covers in the middle look good and the ones on the ends look a little skewed.
+                You'll notice that the covers in the middle look good and the ones on the ends look a little skewed in the first example.
                 This is due to there being only one perspective. So the effect on the ends doesn't look as good because of the perspective.
-                Also, I don't see a difference between the below line and "-webkit-perspective: 800px;"
                 */
                 perspective: 800px;
                 -webkit-perspective: 800px;
@@ -21,7 +20,7 @@
                 -webkit-transform-style: preserve-3d;
             }
             .cover {
-                /* These are just to diplay the covers with the correct sizes. */
+                /* These are just to diplay the covers with the correct size. */
                 background-repeat: no-repeat;
                 display: inline-block;
                 height: 240px;
@@ -31,17 +30,21 @@
                 margin: 0 -50px;
                 /* Make the changes to rotation and margin transition smoothly. */
                 transition: all 1s;
-                /* By default all of the covers' left edge are closer than their right edge. */
+                /* By default a cover's left edge is closer than its right edge. */
                 transform: rotateY(45deg);
                 -webkit-transform: rotateY(45deg);
             }
             .cover:focus {
                 /*
-                When a cover is selected (gets focus) give it a positive left and right margin so it has some space.
+                When a cover is selected (gets focus by either clicking it or tabbing to it) give it a positive left and right margin so it has some space.
+                The exact value is a matter of personal preference.
                 If you use "auto" for the left and right margin there is no smooth transition (on Chrome at least).
                 */
                 margin: 0 20px;
-                /* When a cover is selected (gets focus) remove the rotation and bring closer to the view a little. */
+                /*
+                When a cover is selected (gets focus by either clicking it or tabbing to it) remove the rotation and bring it closer to the viewer a little.
+                How much closer the cover is brought to the user is a matter of preference.
+                */
                 transform: rotateY(0deg) translateZ(100px);
                 -webkit-transform: rotateY(0deg) translateZ(100px);
             }
@@ -52,7 +55,7 @@
             }
 
             #single-variable-perspective {
-                /* When the perspective-origin is changed, the covers shift horizontally. This is needed to make that movement slide instead of jump. */
+                /* When the perspective-origin is changed, the covers shift horizontally. This is transition is needed to make that movement slide instead of jump. */
                 transition: all 1s;
             }
         </style>
@@ -63,7 +66,8 @@
             - Only tested on Firefox 26.0 and Chrome 32.<br/>
             - Chrome does't appear to calculate the anchor area correctly when it is rotated. The
               edge "further away" from the view has an inactive/dead area between it and the center
-              of the cover.
+              of the cover. If you click in this area the currently selected cover loses focus and
+              no new cover gets focus.
         </div>
         <br/>
         <strong>Single, static perspective; no Javascript</strong>
@@ -71,16 +75,19 @@
             - This coverflow has a single, static perspective and uses no Javascript for the effect.<br/>
             - You'll notice that the selected cover has increasing spacing on the side closer to
               the center as the position of the cover gets further from the center.<br/>
-            - This is the same effect as watching a car go by. When it is directly in front of you
-              only the side of the car can be seen. As the car approaches or departs, you see a
-              combination of the side and either the front or the back.
+            - This is the same effect as watching a car go by. When the car is directly in front of
+              you, only the side of the car can be seen. As the car approaches or departs, you see
+              a combination of the side and either the front or the back.
+            - Add "perspective-origin" to ".cover-container" and vary its horizontal component (0%,
+              50%, 100%) to see how this effects the horizontal spacing of each cover when it is
+              selected.
         </div>
         <div id="single-static-perspective" class="cover-container"></div>
 
-        <strong>Single, variable perspective; Javascript is used to change the perspective</strong>
+        <strong>Single, variable perspective; Javascript is used to change the perspective origin</strong>
         <div>
-            - Mostly the same as the above example except that the perspective is positioned
-              directly in front of the cover with focus.
+            - Mostly the same as the above example except that the perspective origin is positioned
+              directly in front of the slected cover.
         </div>
         <div id="single-variable-perspective" class="cover-container"></div>
 
@@ -100,20 +107,17 @@
             singleVariablePerspective.innerHTML = coversHTML;
             // Setup the single, variable perspective focus handler.
             var singleVariablePerspectiveCovers = singleVariablePerspective.getElementsByClassName("cover"),
-                percentageMultiplier = singleVariablePerspective.lastChild.offsetLeft / coverCount,
-                coverFocusHandler = function(e) {
+                singleVariablePerspectiveMultiplier = singleVariablePerspective.lastChild.offsetLeft / coverCount,
+                singleVariablePerspectiveCoverFocusHandler = function(e) {
                     // When a cover gets focus, update its container's horizontal perspective origin.
                     var cover = e.target,
-                        container = cover.parentNode,
-                        indexOfCover = Array.prototype.indexOf.call(container.childNodes, cover),
-                        perspectiveX = (indexOfCover * percentageMultiplier) + "px";
-                    // Set perspective in Firefox.
-                    container.style.perspectiveOrigin = perspectiveX;
-                    // Set perspective in Chrome.
-                    container.style.webkitPerspectiveOrigin = perspectiveX;
+                        indexOfCover = Array.prototype.indexOf.call(singleVariablePerspectiveCovers, cover),
+                        horizontalPerspectiveOrigin = (indexOfCover * singleVariablePerspectiveMultiplier) + "px";
+                    singleVariablePerspective.style.perspectiveOrigin = horizontalPerspectiveOrigin;
+                    singleVariablePerspective.style.webkitPerspectiveOrigin = horizontalPerspectiveOrigin;
                 };
             // Add the focus event handler to all of the covers.
-            for(var i = singleVariablePerspectiveCovers.length; i-- > 0; ) singleVariablePerspectiveCovers[i].addEventListener("focus", coverFocusHandler, false);
+            for(var i = singleVariablePerspectiveCovers.length; i-- > 0; ) singleVariablePerspectiveCovers[i].addEventListener("focus", singleVariablePerspectiveCoverFocusHandler, false);
         </script>
     </body>
 </html>
