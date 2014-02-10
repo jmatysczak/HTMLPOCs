@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title>CoverFlow - CSS Only</title>
+        <title>CoverFlow</title>
         <style>
             #multiple-perspectives {
                 /* This is just to get some white space on the top and left of the covers. Specifically trying to not be fancy here. */
@@ -65,7 +65,31 @@
         </style>
     </head>
     <body>
+        <strong>Browser Notes</strong>
+        <div>
+            - Only tested on Firefox 26.0 and Chrome 32.<br/>
+            - Browser width was 1600px.
+            - Chrome does't appear to calculate the anchor area correctly when it is rotated. The
+              edge "further away" from the view has an inactive/dead area between it and the center
+              of the cover. If you click in this area the currently selected cover loses focus and
+              no new cover gets focus.
+            - Firefox doesn't appear calculate the anchor location correctly. This makes the covers
+              unclickable. So you have to tab through the covers.
+            - Firefox doesn't calculate the rotation transition correctly. This causes the cover to
+              first jump or transition to the default rotation and then jump or transition to the
+              final rotation. A jump or transition occurs depends on which way the covers are being
+              navigated.
+        </div>
+        <br/>
+
+        <strong>Multiple perspectives; no Javascript</strong>
+        <div>
+            - This coverflow has multiple perspectives - one for each cover.
+            - It only users HTML and CSS for this effect.<br/>
+            - However, it has issues as noted above.
+        </div>
         <div id="multiple-perspectives"></div>
+
         <script>
             var coversHTML = "";
             for(var i = 1; i <= 16; i++) coversHTML += "<a href='#' tabindex='1' style='z-index:-" + i + ";'><span style='background-image:url(images/" + i + ".jpg);'></span></a>";
