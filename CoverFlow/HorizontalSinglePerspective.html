@@ -80,11 +80,7 @@
         <strong>Single, variable perspective; Javascript is used to change the perspective</strong>
         <div>
             - Mostly the same as the above example except that the perspective is positioned
-              directly in front of the cover with focus.<br/>
-            - The calcuation that determines the perspective is not perfect. The calcuation assumes
-              the container's width is the same as the width of the covers. In the example, the
-              container is a little wider. So the perspective is noticeably "off" for covers on the
-              far right.
+              directly in front of the cover with focus.
         </div>
         <div id="single-variable-perspective" class="cover-container"></div>
 
@@ -99,24 +95,23 @@
             document.getElementById("single-static-perspective").innerHTML = coversHTML;
 
             // Setup the single, variable perspective example.
-            var singleVariablePerspective = document.getElementById("single-variable-perspective"),
-                singleVariablePerspectiveCovers = singleVariablePerspective.getElementsByClassName("cover"),
+            var singleVariablePerspective = document.getElementById("single-variable-perspective");
+            // Create the covers for the single, variable perspective example.
+            singleVariablePerspective.innerHTML = coversHTML;
+            // Setup the single, variable perspective focus handler.
+            var singleVariablePerspectiveCovers = singleVariablePerspective.getElementsByClassName("cover"),
+                percentageMultiplier = singleVariablePerspective.lastChild.offsetLeft / coverCount,
                 coverFocusHandler = function(e) {
                     // When a cover gets focus, update its container's horizontal perspective origin.
                     var cover = e.target,
                         container = cover.parentNode,
                         indexOfCover = Array.prototype.indexOf.call(container.childNodes, cover),
-                        // For this example, this isn't a perfect calculation. The width of the container is greater than the midth of the covers.
-                        // But it is better than using the cover's actual bounding rectangle.
-                        // This is probably going to vary depending on the situation.
-                        perspectiveX = (indexOfCover / coverCount * 100) + "%";
+                        perspectiveX = (indexOfCover * percentageMultiplier) + "px";
                     // Set perspective in Firefox.
                     container.style.perspectiveOrigin = perspectiveX;
                     // Set perspective in Chrome.
                     container.style.webkitPerspectiveOrigin = perspectiveX;
                 };
-            // Create the covers for the single, variable perspective example.
-            singleVariablePerspective.innerHTML = coversHTML;
             // Add the focus event handler to all of the covers.
             for(var i = singleVariablePerspectiveCovers.length; i-- > 0; ) singleVariablePerspectiveCovers[i].addEventListener("focus", coverFocusHandler, false);
         </script>
