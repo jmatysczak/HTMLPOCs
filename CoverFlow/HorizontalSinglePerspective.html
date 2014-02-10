@@ -64,6 +64,7 @@
         <strong>Browser Notes</strong>
         <div>
             - Only tested on Firefox 26.0 and Chrome 32.<br/>
+            - Browser width was 1600px.
             - Chrome does't appear to calculate the anchor area correctly when it is rotated. The
               edge "further away" from the view has an inactive/dead area between it and the center
               of the cover. If you click in this area the currently selected cover loses focus and
@@ -88,6 +89,10 @@
         <div>
             - Mostly the same as the above example except that the perspective origin is positioned
               directly in front of the slected cover.
+            - This looks pretty good in Chrome. It appears a little off in Firefox for the covers
+              at the far right.
+            - Since this is going to depend on how wide your covers are in relation to the cover
+              container, I am not going to sweat the details in this example.
         </div>
         <div id="single-variable-perspective" class="cover-container"></div>
 
