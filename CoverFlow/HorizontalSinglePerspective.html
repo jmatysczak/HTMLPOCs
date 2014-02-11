@@ -153,7 +153,10 @@
             var singleStaticPerspectivePositionedCovers = singleStaticPerspectivePositioned.getElementsByClassName("cover"),
                 singleStaticPerspectivePositionedContainer = document.getElementById("single-static-perspective-positioned-container"),
                 singleStaticPerspectivePositionedCoverFocusHandler = function(e) {
-                    singleStaticPerspectivePositionedContainer.style.left = -(e.target.offsetLeft + 80) + "px";
+                    var cover = e.target,
+                        indexOfCover = Array.prototype.indexOf.call(singleStaticPerspectivePositionedCovers, cover),
+                        containerLeft = (indexOfCover / coverCount * 1000) + 80 + 20;
+                    singleStaticPerspectivePositionedContainer.style.left = -containerLeft + "px";
                 };
             for(var i = singleStaticPerspectivePositionedCovers.length; i-- > 0; )
                 singleStaticPerspectivePositionedCovers[i].addEventListener("focus", singleStaticPerspectivePositionedCoverFocusHandler, false);
