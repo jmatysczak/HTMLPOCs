@@ -88,14 +88,21 @@
 
         <strong>Single, variable perspective; Javascript is used to change the perspective origin</strong>
         <div>
-            - Mostly the same as the above example except that the perspective origin is positioned
-              directly in front of the slected cover.
+            - Mostly the same as the "Single, static perspective; no Javascript" example except
+            that the perspective origin is positioned directly in front of/over the selected cover.
             - This looks pretty good in Chrome. It appears a little off in Firefox for the covers
               at the far right.
             - Since this is going to depend on how wide your covers are in relation to the cover
               container, I am not going to sweat the details in this example.
         </div>
         <div id="single-variable-perspective" class="cover-container"></div>
+
+        <strong>Single, static perspective; Javascript is used to position the selected cover under the perspective origin</strong>
+        <div>
+            - Mostly the same as the "Single, static perspective; no Javascript" example except
+              that the selected cover is positioned under the perspective origin.
+        </div>
+        <div id="single-static-perspective-positioned-selected-cover" class="cover-container"></div>
 
         <script>
             var coverCount = 16,
@@ -125,6 +132,9 @@
                 };
             // Add the focus event handler to all of the covers.
             for(var i = singleVariablePerspectiveCovers.length; i-- > 0; ) singleVariablePerspectiveCovers[i].addEventListener("focus", singleVariablePerspectiveCoverFocusHandler, false);
+
+            // Setup the single, static perspective with positioned selected cover example.
+            document.getElementById("single-static-perspective-positioned-selected-cover").innerHTML = coversHTML;
         </script>
     </body>
 </html>
