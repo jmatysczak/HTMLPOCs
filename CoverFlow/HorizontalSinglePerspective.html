@@ -58,6 +58,20 @@
                 /* When the perspective-origin is changed, the covers shift horizontally. This is transition is needed to make that movement slide instead of jump. */
                 transition: all 1s;
             }
+
+            #single-static-perspective-positioned {
+                left: 50%;
+                margin: 50px 0;
+                position: absolute;
+                perspective-origin: 0;
+                -webkit-perspective-origin: 0;
+            }
+            #single-static-perspective-positioned-container {
+                left: 0px;
+                position: relative;
+                transition: left 1s;
+                width: 1170px;
+            }
         </style>
     </head>
     <body>
@@ -102,7 +116,7 @@
             - Mostly the same as the "Single, static perspective; no Javascript" example except
               that the selected cover is positioned under the perspective origin.
         </div>
-        <div id="single-static-perspective-positioned-selected-cover" class="cover-container"></div>
+        <div id="single-static-perspective-positioned" class="cover-container"></div>
 
         <script>
             var coverCount = 16,
@@ -134,7 +148,15 @@
             for(var i = singleVariablePerspectiveCovers.length; i-- > 0; ) singleVariablePerspectiveCovers[i].addEventListener("focus", singleVariablePerspectiveCoverFocusHandler, false);
 
             // Setup the single, static perspective with positioned selected cover example.
-            document.getElementById("single-static-perspective-positioned-selected-cover").innerHTML = coversHTML;
+            var singleStaticPerspectivePositioned = document.getElementById("single-static-perspective-positioned");
+            singleStaticPerspectivePositioned.innerHTML = "<div id='single-static-perspective-positioned-container'>" + coversHTML + "</div>";
+            var singleStaticPerspectivePositionedCovers = singleStaticPerspectivePositioned.getElementsByClassName("cover"),
+                singleStaticPerspectivePositionedContainer = document.getElementById("single-static-perspective-positioned-container"),
+                singleStaticPerspectivePositionedCoverFocusHandler = function(e) {
+                    singleStaticPerspectivePositionedContainer.style.left = -(e.target.offsetLeft + 80) + "px";
+                };
+            for(var i = singleStaticPerspectivePositionedCovers.length; i-- > 0; )
+                singleStaticPerspectivePositionedCovers[i].addEventListener("focus", singleStaticPerspectivePositionedCoverFocusHandler, false);
         </script>
     </body>
 </html>
