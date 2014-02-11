@@ -10,7 +10,7 @@
                 margin: 50px 150px;
             }
             a, span {
-                /* These are just to diplay the covers with the correct size. */
+                /* These are just to display the covers with the correct size. */
                 background-repeat: no-repeat;
                 display: inline-block;
                 height: 240px;
@@ -29,7 +29,7 @@
                 transition: margin 1s;
             }
             span {
-                /* Make the changes to rotation and margin transition smoothly. */
+                /* Make the change to rotation transition smoothly. */
                 transition: all 1s;
                 /* By default a cover's left edge is closer than its right edge. */
                 transform: rotateY(45deg);
@@ -46,7 +46,7 @@
             a:focus>span {
                 /*
                 When a cover is selected (gets focus by either clicking it or tabbing to it) remove the rotation and bring it closer to the viewer a little.
-                How much closer the cover is brought to the user is a matter of preference.
+                How much closer is a matter of preference.
                 */
                 transform: rotateY(0deg) translateZ(100px);
                 -webkit-transform: rotateY(0deg) translateZ(100px);
@@ -56,9 +56,12 @@
                 By default the covers are positioned statically. This means the z order specified on the anchors is ignored.
                 This means that earlier covers are rendered behind later ones.
                 This is perfect for covers that are to the left of the selected cover.
+
                 For covers that are to the right of the selected cover, which is what this selector targets, this positions them relatively.
                 Relatively positioned items are rendered according to their z-index. Which is set in decreasing order left to right.
+                Since the z order is descending left to right, this means that later covers are rendered behing earlier covers.
                 Because no position styles (left, right, top, or bottom) were set, the covers are positioned in the normal flow.
+
                 So, in short, this style plus the anchor z-index is what enables the covers to the right of the selected cover to have the correct visual z position.
                 */
                 position: relative;
@@ -79,8 +82,8 @@
               edge "further away" from the view has an inactive/dead area between it and the center
               of the cover. If you click in this area the currently selected cover loses focus and
               no new cover gets focus.
-            - Firefox doesn't appear calculate the anchor location correctly. This makes the covers
-              unclickable. So you have to tab through the covers.
+            - Firefox doesn't appear to calculate the anchor location correctly. This makes the
+              covers unclickable. So you have to tab through the covers.
             - Firefox doesn't calculate the rotation transition correctly. This causes the cover to
               first jump or transition to the default rotation and then jump or transition to the
               final rotation. A jump or transition occurs depends on which way the covers are being
