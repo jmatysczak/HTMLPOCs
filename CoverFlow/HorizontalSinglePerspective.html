@@ -153,7 +153,7 @@
                     // When a cover gets focus, update its container's horizontal perspective origin.
                     var cover = e.target,
                         indexOfCover = Array.prototype.indexOf.call(singleVariablePerspectiveCovers, cover),
-                        perspectiveOriginX = (singleVariablePerspectiveOffset + (indexOfCover * singleVariablePerspectiveMultiplier)) + "px";
+                        perspectiveOriginX = (100 + (indexOfCover * 60)) + "px";
                     singleVariablePerspective.style.perspectiveOrigin = perspectiveOriginX;
                     singleVariablePerspective.style.webkitPerspectiveOrigin = perspectiveOriginX;
                 };
