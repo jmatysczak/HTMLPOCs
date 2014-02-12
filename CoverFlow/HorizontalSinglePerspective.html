@@ -78,7 +78,7 @@
         <strong>Browser Notes</strong>
         <div>
             - Only tested on Firefox 26.0 and Chrome 32.<br/>
-            - Browser width was 1600px.
+            - Browser width was 1600px.<br/>
             - Chrome does't appear to calculate the anchor area correctly when it is rotated. The
               edge "further away" from the view has an inactive/dead area between it and the center
               of the cover. If you click in this area the currently selected cover loses focus and
@@ -86,26 +86,38 @@
         </div>
         <br/>
 
+        <strong>Implementation Notes</strong>
+        <div>
+            - Focus is used to track the selected node.<br/>
+            - An upside is that it simplifies the HTML.<br/>
+            - A downside is that when the browser loses focus the selected cover loses focus.<br/>
+            - Instead of using focus to track the selected node, an alternative is to use radio
+              buttons with associated labels. <a href='#TODO'>An example can be found here.</a>
+        </div>
+        <br/>
+
         <strong>Single, static perspective; no Javascript</strong>
         <div>
-            - This coverflow has a single, static perspective and uses no Javascript for the effect.<br/>
+            - This coverflow has a single, static perspective and uses no Javascript for the
+              effect. (A little Javascript is used to initially create the covers.)<br/>
             - You'll notice that the selected cover has increasing spacing on the side closer to
               the center as the position of the cover gets further from the center.<br/>
             - This is the same effect as watching a car go by. When the car is directly in front of
               you, only the side of the car can be seen. As the car approaches or departs, you see
-              a combination of the side and either the front or the back.
-            - Add "perspective-origin" to ".cover-container" and vary its horizontal component (0%,
-              50%, 100%) to see how this effects the horizontal spacing of each cover when it is
-              selected.
+              a combination of the side and either the front or the back.<br/>
+            - You can add "perspective-origin" to ".cover-container" and vary its horizontal
+              component (0%, 50%, 100%) to see how this effects the horizontal spacing of each
+              cover when it is selected.
         </div>
         <div id="single-static-perspective" class="cover-container"></div>
 
         <strong>Single, variable perspective; Javascript is used to change the perspective origin</strong>
         <div>
-            - Mostly the same as the "Single, static perspective; no Javascript" example except
-            that the perspective origin is positioned directly in front of/over the selected cover.
+            - This coverflow is very similar to the "Single, static perspective; no Javascript"
+              example except that the perspective origin is positioned directly in front of/over
+              the selected cover.<br/>
             - This looks pretty good in Chrome. It appears a little off in Firefox for the covers
-              at the far right.
+              at the far right.<br/>
             - Since this is going to depend on how wide your covers are in relation to the cover
               container, I am not going to sweat the details in this example.
         </div>
@@ -113,8 +125,9 @@
 
         <strong>Single, static perspective; Javascript is used to position the selected cover under the perspective origin</strong>
         <div>
-            - Mostly the same as the "Single, static perspective; no Javascript" example except
-              that the selected cover is positioned under the perspective origin.
+            - This coverflow is very similar to the "Single, static perspective; no Javascript"
+              example except that the selected cover is positioned under the perspective origin.<br/>
+            - The perspective origin is centered horizontally at the browser's view port center.
         </div>
         <div id="single-static-perspective-positioned" class="cover-container"></div>
 
