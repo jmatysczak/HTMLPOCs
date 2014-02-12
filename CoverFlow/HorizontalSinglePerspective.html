@@ -130,9 +130,9 @@
 
             // Setup the single, variable perspective example.
             var singleVariablePerspective = document.getElementById("single-variable-perspective");
-            // Create the covers for the single, variable perspective example.
+            // Create the covers.
             singleVariablePerspective.innerHTML = coversHTML;
-            // Setup the single, variable perspective focus handler.
+            // Setup the focus handler that changes the perspective origin.
             var singleVariablePerspectiveCovers = singleVariablePerspective.getElementsByClassName("cover"),
                 singleVariablePerspectiveOffset = singleVariablePerspective.lastChild.offsetWidth / 2,
                 singleVariablePerspectiveMultiplier = singleVariablePerspective.lastChild.offsetLeft / coverCount,
@@ -149,15 +149,31 @@
 
             // Setup the single, static perspective with positioned selected cover example.
             var singleStaticPerspectivePositioned = document.getElementById("single-static-perspective-positioned");
+            // Create the covers.
             singleStaticPerspectivePositioned.innerHTML = "<div id='single-static-perspective-positioned-container'>" + coversHTML + "</div>";
+            // Setup the focus handler that changes the location of the covers.
             var singleStaticPerspectivePositionedCovers = singleStaticPerspectivePositioned.getElementsByClassName("cover"),
                 singleStaticPerspectivePositionedContainer = document.getElementById("single-static-perspective-positioned-container"),
                 singleStaticPerspectivePositionedCoverFocusHandler = function(e) {
                     var cover = e.target,
                         indexOfCover = Array.prototype.indexOf.call(singleStaticPerspectivePositionedCovers, cover),
+                        /*
+                        The node that holds that covers is positioned horizontally so that the selected cover is centered on the screen.
+                        This is achieved by having "single-static-perspective-positioned" positioned absolutely with its left edge centered.
+                        The perspective origin of "single-static-perspective-positioned" is set at 0. So having the selected cover centered
+                        over its left edge is perfect.
+                        The below calculation sets the cover container's left edge to be shifted to the left so the selected cover is centered
+                        over the left edge of "single-static-perspective-positioned".
+
+                        The calculation is the number of covers to the left of the selected cover, plus the selected cover's left margin, plus half its width.
+                        60 - Each cover's width is 160px with left and right margins of -50px. So each covers width is 160 - 50 - 50 which is 60.
+                        80 - Half the cover width.
+                        20 - The size of the left margin.
+                        */
                         containerLeft = (indexOfCover * 60) + 80 + 20;
                     singleStaticPerspectivePositionedContainer.style.left = -containerLeft + "px";
                 };
+            // Add the focus event handler to all of the covers.
             for(var i = singleStaticPerspectivePositionedCovers.length; i-- > 0; )
                 singleStaticPerspectivePositionedCovers[i].addEventListener("focus", singleStaticPerspectivePositionedCoverFocusHandler, false);
         </script>
