@@ -155,7 +155,7 @@
                 singleStaticPerspectivePositionedCoverFocusHandler = function(e) {
                     var cover = e.target,
                         indexOfCover = Array.prototype.indexOf.call(singleStaticPerspectivePositionedCovers, cover),
-                        containerLeft = (indexOfCover / coverCount * 1000) + 80 + 20;
+                        containerLeft = (indexOfCover * 60) + 80 + 20;
                     singleStaticPerspectivePositionedContainer.style.left = -containerLeft + "px";
                 };
             for(var i = singleStaticPerspectivePositionedCovers.length; i-- > 0; )
