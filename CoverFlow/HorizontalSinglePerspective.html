@@ -116,10 +116,6 @@
             - This coverflow is very similar to the "Single, static perspective; no Javascript"
               example except that the perspective origin is positioned directly in front of/over
               the selected cover.<br/>
-            - This looks pretty good in Chrome. It appears a little off in Firefox for the covers
-              at the far right.<br/>
-            - Since this is going to depend on how wide your covers are in relation to the cover
-              container, I am not going to sweat the details in this example.
         </div>
         <div id="single-variable-perspective" class="cover-container"></div>
 
@@ -147,13 +143,17 @@
             singleVariablePerspective.innerHTML = coversHTML;
             // Setup the focus handler that changes the perspective origin.
             var singleVariablePerspectiveCovers = singleVariablePerspective.getElementsByClassName("cover"),
-                singleVariablePerspectiveOffset = singleVariablePerspective.lastChild.offsetWidth / 2,
-                singleVariablePerspectiveMultiplier = singleVariablePerspective.lastChild.offsetLeft / coverCount,
                 singleVariablePerspectiveCoverFocusHandler = function(e) {
                     // When a cover gets focus, update its container's horizontal perspective origin.
                     var cover = e.target,
                         indexOfCover = Array.prototype.indexOf.call(singleVariablePerspectiveCovers, cover),
-                        perspectiveOriginX = (100 + (indexOfCover * 60)) + "px";
+                        /*
+                        The calculation is the number of covers to the left of the selected cover times the cover width, plus the selected cover's left margin, plus half its width.
+                        60 - Each cover's width is 160px with left and right margins of -50px. So each covers width is 160 - 50 - 50 which is 60.
+                        80 - Half the cover width.
+                        20 - The size of the left margin.
+                        */
+                        perspectiveOriginX = ((indexOfCover * 60) + 20 + 80) + "px";
                     singleVariablePerspective.style.perspectiveOrigin = perspectiveOriginX;
                     singleVariablePerspective.style.webkitPerspectiveOrigin = perspectiveOriginX;
                 };
@@ -178,12 +178,12 @@
                         The below calculation sets the cover container's left edge to be shifted to the left so the selected cover is centered
                         over the left edge of "single-static-perspective-positioned".
 
-                        The calculation is the number of covers to the left of the selected cover, plus the selected cover's left margin, plus half its width.
+                        The calculation is the number of covers to the left of the selected cover times the cover width, plus the selected cover's left margin, plus half its width.
                         60 - Each cover's width is 160px with left and right margins of -50px. So each covers width is 160 - 50 - 50 which is 60.
                         80 - Half the cover width.
                         20 - The size of the left margin.
                         */
-                        containerLeft = (indexOfCover * 60) + 80 + 20;
+                        containerLeft = (indexOfCover * 60) + 20 + 80;
                     singleStaticPerspectivePositionedContainer.style.left = -containerLeft + "px";
                 };
             // Add the focus event handler to all of the covers.
