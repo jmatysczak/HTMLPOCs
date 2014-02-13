@@ -132,6 +132,13 @@
             var coverCount = 16,
                 coversHTML = "";
 
+            // Prevent the page from scrolling to the top when a cover is clicked.
+            document.addEventListener("click", function(e) {
+                if(e.target.classList.contains("cover")) {
+                    e.preventDefault();
+                }
+            }, false);
+
             // Create the HTML for the covers.
             for(var i = 1; i <= coverCount; i++) coversHTML += "<a href='#' class='cover' style='background-image:url(images/" + i + ".jpg)' tabindex='1'></a>"
 
