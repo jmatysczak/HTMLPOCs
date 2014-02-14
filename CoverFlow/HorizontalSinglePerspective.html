@@ -119,6 +119,16 @@
         </div>
         <div id="single-variable-perspective" class="cover-container"></div>
 
+        <strong>Single, variable perspective; Javascript is used to change the perspective origin and position</strong>
+        <div>
+            - This coverflow is a combination of the "Single, variable perspective; Javascript is
+              used to change the perspective origin" and "Single, static perspective; Javascript is
+              used to position the selected cover under the perspective origin" examples.<br/>
+            - The perspective origin is positioned in front of the selected cover and the selected
+              cover is centered.
+        </div>
+        <div id="single-variable-perspective-and-position" class="cover-container"></div>
+
         <strong>Single, static perspective; Javascript is used to position the selected cover under the perspective origin</strong>
         <div>
             - This coverflow is very similar to the "Single, static perspective; no Javascript"
@@ -142,8 +152,10 @@
             // Create the HTML for the covers.
             for(var i = 1; i <= coverCount; i++) coversHTML += "<a href='#' class='cover' style='background-image:url(images/" + i + ".jpg)' tabindex='1'></a>"
 
+
             // Create the covers for the single, static perspective example.
             document.getElementById("single-static-perspective").innerHTML = coversHTML;
+
 
             // Setup the single, variable perspective example.
             var singleVariablePerspective = document.getElementById("single-variable-perspective");
@@ -167,6 +179,13 @@
                 };
             // Add the focus event handler to all of the covers.
             for(var i = singleVariablePerspectiveCovers.length; i-- > 0; ) singleVariablePerspectiveCovers[i].addEventListener("focus", singleVariablePerspectiveCoverFocusHandler, false);
+
+
+            // Setup the single, variable perspective and position example.
+            var singleVariablePerspectiveAndPosition = document.getElementById("single-variable-perspective-and-position");
+            // Create the covers.
+            singleVariablePerspectiveAndPosition.innerHTML = coversHTML;
+
 
             // Setup the single, static perspective with positioned selected cover example.
             var singleStaticPerspectivePositioned = document.getElementById("single-static-perspective-positioned");
