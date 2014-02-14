@@ -55,7 +55,13 @@
             }
 
             #single-variable-perspective {
-                /* When the perspective-origin is changed, the covers shift horizontally. This is transition is needed to make that movement slide instead of jump. */
+                /* When the perspective-origin is changed, the covers shift horizontally. This transition is needed to make that movement slide instead of jump. */
+                transition: all 1s;
+            }
+
+            #single-variable-perspective-and-position {
+                margin: 50px 0;
+                /* When the perspective-origin and horizontal position is changed, the covers shift horizontally. This transition is needed to make that movement slide instead of jump. */
                 transition: all 1s;
             }
 
@@ -197,9 +203,13 @@
                         80 - Half the cover width.
                         20 - The size of the left margin.
                         */
-                        perspectiveOriginX = ((indexOfCover * 60) + 20 + 80) + "px";
-                    singleVariablePerspectiveAndPosition.style.perspectiveOrigin = perspectiveOriginX;
-                    singleVariablePerspectiveAndPosition.style.webkitPerspectiveOrigin = perspectiveOriginX;
+                        perspectiveOriginX = (indexOfCover * 60) + 20 + 80,
+                        perspectiveOriginXWithUnits = perspectiveOriginX + "px",
+                        translateX = "translateX(" + ((window.innerWidth / 2) - perspectiveOriginX) + "px)";
+                    singleVariablePerspectiveAndPosition.style.transform = translateX;
+                    singleVariablePerspectiveAndPosition.style.webkitTransform = translateX;
+                    singleVariablePerspectiveAndPosition.style.perspectiveOrigin = perspectiveOriginXWithUnits;
+                    singleVariablePerspectiveAndPosition.style.webkitPerspectiveOrigin = perspectiveOriginXWithUnits;
                 };
             // Add the focus event handler to all of the covers.
             for(var i = singleVariablePerspectiveAndPositionCovers.length; i-- > 0; )
