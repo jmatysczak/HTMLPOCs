@@ -185,6 +185,25 @@
             var singleVariablePerspectiveAndPosition = document.getElementById("single-variable-perspective-and-position");
             // Create the covers.
             singleVariablePerspectiveAndPosition.innerHTML = coversHTML;
+            // Setup the focus handler that changes the perspective origin and cover position.
+            var singleVariablePerspectiveAndPositionCovers = singleVariablePerspectiveAndPosition.getElementsByClassName("cover"),
+                singleVariablePerspectiveAndPositionCoverFocusHandler = function(e) {
+                    // When a cover gets focus, update its container's horizontal perspective origin.
+                    var cover = e.target,
+                        indexOfCover = Array.prototype.indexOf.call(singleVariablePerspectiveAndPositionCovers, cover),
+                        /*
+                        The calculation is the number of covers to the left of the selected cover times the cover width, plus the selected cover's left margin, plus half its width.
+                        60 - Each cover's width is 160px with left and right margins of -50px. So each covers width is 160 - 50 - 50 which is 60.
+                        80 - Half the cover width.
+                        20 - The size of the left margin.
+                        */
+                        perspectiveOriginX = ((indexOfCover * 60) + 20 + 80) + "px";
+                    singleVariablePerspectiveAndPosition.style.perspectiveOrigin = perspectiveOriginX;
+                    singleVariablePerspectiveAndPosition.style.webkitPerspectiveOrigin = perspectiveOriginX;
+                };
+            // Add the focus event handler to all of the covers.
+            for(var i = singleVariablePerspectiveAndPositionCovers.length; i-- > 0; )
+                singleVariablePerspectiveAndPositionCovers[i].addEventListener("focus", singleVariablePerspectiveAndPositionCoverFocusHandler, false);
 
 
             // Setup the single, static perspective with positioned selected cover example.
