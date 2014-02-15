@@ -5,6 +5,56 @@
         <meta charset="utf-8">
         <title>CoverFlow</title>
         <style>
+            .cover-container {
+                /* This is just to get some white space on the top and left of the covers. Specifically trying to not be fancy here. */
+                margin: 50px 0;
+                /*
+                This controls how far away the covers are from the viewer.
+                You'll notice that the covers in the middle look good and the ones on the ends look a little skewed in the first example.
+                This is due to there being only one perspective. So the effect on the ends doesn't look as good because of the perspective.
+                */
+                perspective: 800px;
+                -webkit-perspective: 800px;
+                /* This enables the 3D look. */
+                transform-style: preserve-3d;
+                -webkit-transform-style: preserve-3d;
+                /* When the perspective-origin and horizontal position is changed, the covers shift horizontally. This transition is needed to make that movement slide instead of jump. */
+                transition: all 1s;
+            }
+            .cover {
+                /* These are just to display the covers with the correct size. */
+                background-repeat: no-repeat;
+                display: inline-block;
+                height: 240px;
+                width: 160px;
+
+                /* The top and bottom margins don't matter. The left and right margins have to be negative so the covers overlap. */
+                margin: 0 -50px;
+                /* Make the changes to rotation and margin transition smoothly. */
+                transition: all 1s;
+                /* By default a cover's left edge is closer than its right edge. */
+                transform: rotateY(45deg);
+                -webkit-transform: rotateY(45deg);
+            }
+            .cover:focus {
+                /*
+                When a cover is selected (gets focus by either clicking it or tabbing to it) give it a positive left and right margin so it has some space.
+                The exact value is a matter of personal preference.
+                If you use "auto" for the left and right margin there is no smooth transition (on Chrome at least).
+                */
+                margin: 0 20px;
+                /*
+                When a cover is selected (gets focus by either clicking it or tabbing to it) remove the rotation and bring it closer to the viewer a little.
+                How much closer the cover is brought to the user is a matter of preference.
+                */
+                transform: rotateY(0deg) translateZ(100px);
+                -webkit-transform: rotateY(0deg) translateZ(100px);
+            }
+            .cover:focus~.cover {
+                /* All covers to the right of the selected cover get rotated so that their right edge is closer than their left edge. */
+                transform: rotateY(-45deg);
+                -webkit-transform: rotateY(-45deg);
+            }
         </style>
     </head>
     <body>
@@ -59,7 +109,8 @@
             // Create the covers.
             singleVariablePerspectiveAndPosition.innerHTML = coversHTML;
             // Setup the focus handler that changes the perspective origin and cover position.
-            var singleVariablePerspectiveAndPositionCovers = singleVariablePerspectiveAndPosition.getElementsByClassName("cover"),
+            var forEach = Array.prototype.forEach,
+                singleVariablePerspectiveAndPositionCovers = singleVariablePerspectiveAndPosition.getElementsByClassName("cover"),
                 singleVariablePerspectiveAndPositionCoverFocusHandler = function(e) {
                     // When a cover gets focus, update its container's horizontal perspective origin.
                     var cover = e.target,
@@ -79,8 +130,9 @@
                     singleVariablePerspectiveAndPosition.style.webkitPerspectiveOrigin = perspectiveOriginXWithUnits;
                 };
             // Add the focus event handler to all of the covers.
-            for(var i = singleVariablePerspectiveAndPositionCovers.length; i-- > 0; )
-                singleVariablePerspectiveAndPositionCovers[i].addEventListener("focus", singleVariablePerspectiveAndPositionCoverFocusHandler, false);
+            forEach.call(singleVariablePerspectiveAndPositionCovers, function(singleVariablePerspectiveAndPositionCover) {
+                singleVariablePerspectiveAndPositionCover.addEventListener("focus", singleVariablePerspectiveAndPositionCoverFocusHandler, false);
+            });
         </script>
     </body>
 </html>
