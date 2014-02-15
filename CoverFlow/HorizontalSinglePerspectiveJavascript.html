@@ -6,22 +6,19 @@
         <title>CoverFlow</title>
         <style>
             .container {
+                /* Prevent horizontal scrollbar. */
                 overflow: hidden;
             }
             .cover-container {
-                /* This is just to get some white space on the top and left of the covers. Specifically trying to not be fancy here. */
+                /* The top/bottom margin needs to be big enough to accommodate the scaled/rotated covers. */
                 margin: 50px 0;
-                /*
-                This controls how far away the covers are from the viewer.
-                You'll notice that the covers in the middle look good and the ones on the ends look a little skewed in the first example.
-                This is due to there being only one perspective. So the effect on the ends doesn't look as good because of the perspective.
-                */
+                /* This controls how far away the covers are from the viewer. */
                 perspective: 800px;
                 -webkit-perspective: 800px;
                 /* This enables the 3D look. */
                 transform-style: preserve-3d;
                 -webkit-transform-style: preserve-3d;
-                /* When the perspective-origin and horizontal position is changed, the covers shift horizontally. This transition is needed to make that movement slide instead of jump. */
+                /* When the perspective-origin and horizontal position are changed, the covers shift horizontally. This transition is needed to make that movement slide instead of jump. */
                 transition: all 1s;
             }
             .cover {
@@ -60,11 +57,11 @@
 
         <strong>Single, variable perspective; Javascript is used to change the perspective origin and position</strong>
         <div>
-            - This coverflow is a combination of the "Single, variable perspective; Javascript is
-              used to change the perspective origin" and "Single, static perspective; Javascript is
-              used to position the selected cover under the perspective origin" examples.<br/>
-            - The perspective origin is positioned in front of the selected cover and the selected
-              cover is centered.
+            - This coverflow is similar to the "Single, variable perspective; Javascript is used to
+              change the perspective origin and position" example in HorizontalSinglePerspective
+              except that it batches all styling changes into a requestAnimiationFrame execution.
+            - A "container" div is used to prevent a full page repaint when the "cover container"
+              is moved horizontally.
         </div>
         <div class="container">
             <div id="single-variable-perspective-and-position" class="cover-container"></div>
@@ -120,12 +117,10 @@
                     forEach.call(singleVariablePerspectiveAndPositionCovers, setCoverStyles);
                 },
                 singleVariablePerspectiveAndPositionCoverFocusHandler = function(e) {
-                    // When a cover gets focus, update its container's horizontal perspective origin.
                     indexOfCover = indexOf.call(singleVariablePerspectiveAndPositionCovers, e.target);
                     cancelAnimationFrame(animationFrameId);
                     animationFrameId = requestAnimationFrame(animationFrameHandler);
                 };
-            // Add the focus event handler to all of the covers.
             forEach.call(singleVariablePerspectiveAndPositionCovers, function(cover) {
                 cover.addEventListener("focus", singleVariablePerspectiveAndPositionCoverFocusHandler, false);
             });
