@@ -127,8 +127,8 @@
                     var perspectiveOriginX = (indexOfCover * 60) + 20 + 80,
                         perspectiveOriginXWithUnits = perspectiveOriginX + "px",
                         translateX = "translateX(" + (viewportCenter - perspectiveOriginX) + "px)";
-                    singleVariablePerspectiveAndPosition.style.transform = translateX;
-                    singleVariablePerspectiveAndPosition.style.webkitTransform = translateX;
+                    //singleVariablePerspectiveAndPosition.style.transform = translateX;
+                    //singleVariablePerspectiveAndPosition.style.webkitTransform = translateX;
                     singleVariablePerspectiveAndPosition.style.perspectiveOrigin = perspectiveOriginXWithUnits;
                     singleVariablePerspectiveAndPosition.style.webkitPerspectiveOrigin = perspectiveOriginXWithUnits;
                     forEach.call(singleVariablePerspectiveAndPositionCovers, setCoverStyles);
