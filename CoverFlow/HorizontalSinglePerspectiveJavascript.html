@@ -1,0 +1,86 @@
+<!doctype html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>CoverFlow</title>
+        <style>
+        </style>
+    </head>
+    <body>
+        <strong>Browser Notes</strong>
+        <div>
+            - Only tested on Firefox 26.0 and Chrome 32.<br/>
+            - Browser width was 1600px.<br/>
+            - Chrome does't appear to calculate the anchor area correctly when it is rotated. The
+              edge "further away" from the view has an inactive/dead area between it and the center
+              of the cover. If you click in this area the currently selected cover loses focus and
+              no new cover gets focus.
+        </div>
+        <br/>
+
+        <strong>Implementation Notes</strong>
+        <div>
+            - Focus is used to track the selected node.<br/>
+            - An upside is that it simplifies the HTML.<br/>
+            - A downside is that when the browser loses focus the selected cover loses focus.<br/>
+            - Instead of using focus to track the selected node, an alternative is to use radio
+              buttons with associated labels. <a href='#TODO'>An example can be found here.</a>
+        </div>
+        <br/>
+
+        <strong>Single, variable perspective; Javascript is used to change the perspective origin and position</strong>
+        <div>
+            - This coverflow is a combination of the "Single, variable perspective; Javascript is
+              used to change the perspective origin" and "Single, static perspective; Javascript is
+              used to position the selected cover under the perspective origin" examples.<br/>
+            - The perspective origin is positioned in front of the selected cover and the selected
+              cover is centered.
+        </div>
+        <div id="single-variable-perspective-and-position" class="cover-container"></div>
+
+        <script>
+            var coverCount = 16,
+                coversHTML = "";
+
+            // Prevent the page from scrolling to the top when a cover is clicked.
+            document.addEventListener("click", function(e) {
+                if(e.target.classList.contains("cover")) {
+                    e.preventDefault();
+                }
+            }, false);
+
+            // Create the HTML for the covers.
+            for(var i = 1; i <= coverCount; i++) coversHTML += "<a href='#' class='cover' style='background-image:url(images/" + i + ".jpg)' tabindex='1'></a>"
+
+
+            // Setup the single, variable perspective and position example.
+            var singleVariablePerspectiveAndPosition = document.getElementById("single-variable-perspective-and-position");
+            // Create the covers.
+            singleVariablePerspectiveAndPosition.innerHTML = coversHTML;
+            // Setup the focus handler that changes the perspective origin and cover position.
+            var singleVariablePerspectiveAndPositionCovers = singleVariablePerspectiveAndPosition.getElementsByClassName("cover"),
+                singleVariablePerspectiveAndPositionCoverFocusHandler = function(e) {
+                    // When a cover gets focus, update its container's horizontal perspective origin.
+                    var cover = e.target,
+                        indexOfCover = Array.prototype.indexOf.call(singleVariablePerspectiveAndPositionCovers, cover),
+                        /*
+                        The calculation is the number of covers to the left of the selected cover times the cover width, plus the selected cover's left margin, plus half its width.
+                        60 - Each cover's width is 160px with left and right margins of -50px. So each covers width is 160 - 50 - 50 which is 60.
+                        80 - Half the cover width.
+                        20 - The size of the left margin.
+                        */
+                        perspectiveOriginX = (indexOfCover * 60) + 20 + 80,
+                        perspectiveOriginXWithUnits = perspectiveOriginX + "px",
+                        translateX = "translateX(" + ((window.innerWidth / 2) - perspectiveOriginX) + "px)";
+                    singleVariablePerspectiveAndPosition.style.transform = translateX;
+                    singleVariablePerspectiveAndPosition.style.webkitTransform = translateX;
+                    singleVariablePerspectiveAndPosition.style.perspectiveOrigin = perspectiveOriginXWithUnits;
+                    singleVariablePerspectiveAndPosition.style.webkitPerspectiveOrigin = perspectiveOriginXWithUnits;
+                };
+            // Add the focus event handler to all of the covers.
+            for(var i = singleVariablePerspectiveAndPositionCovers.length; i-- > 0; )
+                singleVariablePerspectiveAndPositionCovers[i].addEventListener("focus", singleVariablePerspectiveAndPositionCoverFocusHandler, false);
+        </script>
+    </body>
+</html>
