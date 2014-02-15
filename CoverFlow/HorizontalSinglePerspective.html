@@ -132,8 +132,13 @@
               used to position the selected cover under the perspective origin" examples.<br/>
             - The perspective origin is positioned in front of the selected cover and the selected
               cover is centered.
+            - I came back and revisited this one after doing HorizontalSinglePerspectiveJavascript
+              and wrapped it in a div with "overflow:hidden". The Chrome Timeline Frames view
+              became much better. Again: no big repaints.
         </div>
-        <div id="single-variable-perspective-and-position" class="cover-container"></div>
+        <div style="overflow:hidden;">
+            <div id="single-variable-perspective-and-position" class="cover-container"></div>
+        </div>
 
         <strong>Single, static perspective; Javascript is used to position the selected cover under the perspective origin</strong>
         <div>
