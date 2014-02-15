@@ -90,52 +90,54 @@
             // Setup the focus handler that changes the perspective origin and cover position.
             var forEach = Array.prototype.forEach,
                 indexOf = Array.prototype.indexOf,
+                indexOfCover = 0,
                 viewportCenter = window.innerWidth / 2,
                 animationFrameId = 0,
                 singleVariablePerspectiveAndPositionCovers = singleVariablePerspectiveAndPosition.getElementsByClassName("cover"),
+                setCoverStyles = function(cover, i) {
+                    var coverStyle = cover.style;
+                    if(i < indexOfCover) {
+                        /* The top and bottom margins don't matter. The left and right margins have to be negative so the covers overlap. */
+                        coverStyle.margin = "0 -50px";
+                        /* By default a cover's left edge is closer than its right edge. */
+                        coverStyle.transform = "rotateY(45deg)";
+                        coverStyle.webkitTransform = "rotateY(45deg)";
+                    } else if(i === indexOfCover) {
+                        /*
+                        When a cover is selected (gets focus by either clicking it or tabbing to it) give it a positive left and right margin so it has some space.
+                        The exact value is a matter of personal preference.
+                        If you use "auto" for the left and right margin there is no smooth transition (on Chrome at least).
+                        */
+                        coverStyle.margin = "0 20px";
+                        /*
+                        When a cover is selected (gets focus by either clicking it or tabbing to it) remove the rotation and bring it closer to the viewer a little.
+                        How much closer the cover is brought to the user is a matter of preference.
+                        */
+                        coverStyle.transform = "rotateY(0deg) translateZ(100px)";
+                        coverStyle.webkitTransform = "rotateY(0deg) translateZ(100px)";
+                    } else {
+                        /* The top and bottom margins don't matter. The left and right margins have to be negative so the covers overlap. */
+                        coverStyle.margin = "0 -50px";
+                        /* All covers to the right of the selected cover get rotated so that their right edge is closer than their left edge. */
+                        coverStyle.transform = "rotateY(-45deg)";
+                        coverStyle.webkitTransform = "rotateY(-45deg)";
+                    }
+                },
+                animationFrameHandler = function() {
+                    var perspectiveOriginX = (indexOfCover * 60) + 20 + 80,
+                        perspectiveOriginXWithUnits = perspectiveOriginX + "px",
+                        translateX = "translateX(" + (viewportCenter - perspectiveOriginX) + "px)";
+                    singleVariablePerspectiveAndPosition.style.transform = translateX;
+                    singleVariablePerspectiveAndPosition.style.webkitTransform = translateX;
+                    singleVariablePerspectiveAndPosition.style.perspectiveOrigin = perspectiveOriginXWithUnits;
+                    singleVariablePerspectiveAndPosition.style.webkitPerspectiveOrigin = perspectiveOriginXWithUnits;
+                    forEach.call(singleVariablePerspectiveAndPositionCovers, setCoverStyles);
+                },
                 singleVariablePerspectiveAndPositionCoverFocusHandler = function(e) {
                     // When a cover gets focus, update its container's horizontal perspective origin.
-                    var cover = e.target;
+                    indexOfCover = indexOf.call(singleVariablePerspectiveAndPositionCovers, e.target);
                     cancelAnimationFrame(animationFrameId);
-                    animationFrameId = requestAnimationFrame(function() {
-                        var indexOfCover = indexOf.call(singleVariablePerspectiveAndPositionCovers, cover),
-                            perspectiveOriginX = (indexOfCover * 60) + 20 + 80,
-                            perspectiveOriginXWithUnits = perspectiveOriginX + "px",
-                            translateX = "translateX(" + (viewportCenter - perspectiveOriginX) + "px)";
-                        singleVariablePerspectiveAndPosition.style.transform = translateX;
-                        singleVariablePerspectiveAndPosition.style.webkitTransform = translateX;
-                        singleVariablePerspectiveAndPosition.style.perspectiveOrigin = perspectiveOriginXWithUnits;
-                        singleVariablePerspectiveAndPosition.style.webkitPerspectiveOrigin = perspectiveOriginXWithUnits;
-                        forEach.call(singleVariablePerspectiveAndPositionCovers, function(cover, i) {
-                            var coverStyle = cover.style;
-                            if(i < indexOfCover) {
-                                /* The top and bottom margins don't matter. The left and right margins have to be negative so the covers overlap. */
-                                coverStyle.margin = "0 -50px";
-                                /* By default a cover's left edge is closer than its right edge. */
-                                coverStyle.transform = "rotateY(45deg)";
-                                coverStyle.webkitTransform = "rotateY(45deg)";
-                            } else if(i === indexOfCover) {
-                                /*
-                                When a cover is selected (gets focus by either clicking it or tabbing to it) give it a positive left and right margin so it has some space.
-                                The exact value is a matter of personal preference.
-                                If you use "auto" for the left and right margin there is no smooth transition (on Chrome at least).
-                                */
-                                coverStyle.margin = "0 20px";
-                                /*
-                                When a cover is selected (gets focus by either clicking it or tabbing to it) remove the rotation and bring it closer to the viewer a little.
-                                How much closer the cover is brought to the user is a matter of preference.
-                                */
-                                coverStyle.transform = "rotateY(0deg) translateZ(100px)";
-                                coverStyle.webkitTransform = "rotateY(0deg) translateZ(100px)";
-                            } else {
-                                /* The top and bottom margins don't matter. The left and right margins have to be negative so the covers overlap. */
-                                coverStyle.margin = "0 -50px";
-                                /* All covers to the right of the selected cover get rotated so that their right edge is closer than their left edge. */
-                                coverStyle.transform = "rotateY(-45deg)";
-                                coverStyle.webkitTransform = "rotateY(-45deg)";
-                            }
-                        });
-                    });
+                    animationFrameId = requestAnimationFrame(animationFrameHandler);
                 };
             // Add the focus event handler to all of the covers.
             forEach.call(singleVariablePerspectiveAndPositionCovers, function(cover) {
