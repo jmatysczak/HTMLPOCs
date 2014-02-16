@@ -12,5 +12,5 @@ Horizontal CoverFlow where there is a single perspective. Various amounts of Jav
 to achieve variations of the CoverFlow effect.
 
 ##### HorizontalSinglePerspectiveJavascript.html
-Horizontal CoverFlow where there is a single perspective. Javascript is primarily used to set the
-styles used to achieve the CoverFlow effect.
+Horizontal CoverFlow where there is a single perspective. Javascript is used to set the styles used
+to achieve the CoverFlow effect via requestAnimationFrame.
