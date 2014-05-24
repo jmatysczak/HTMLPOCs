@@ -14,6 +14,9 @@ html, body {
     height: 100%;
     overflow: hidden;
 }
+#notes {
+    position: absolute;
+}
 #zoom {
     position: absolute;
     top: 10px;
@@ -27,6 +30,12 @@ html, body {
 		</style>
 	</head>
 	<body onload="showGraph()">
+        <ul id="notes">
+            <li>Hold down the left mouse button and drag to pan.</li>
+            <li>Use the slider on the top, right to zoom.</li>
+            <li>Click a node to select it and the connected edges.</li>
+            <li>A any query data, like "?debug", to the url to see the layout.</li>
+        </ul>
         <input id="zoom" type="range" min="25" max="175" step="1" value="100"/>
         <div id="graph"></div>
 
