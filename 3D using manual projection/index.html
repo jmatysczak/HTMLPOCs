@@ -111,8 +111,7 @@ function draw() {
         height = canvas.offsetHeight,
         context = canvas.getContext("2d");
 
-    context.clearRect(0, 0, width, height);
-
+    // Project 3D points onto 2D plane.
     var theta = Math.PI * azimuth / 180.0,
         phi = Math.PI * elevation / 180.0,
         cosT = Math.cos(theta),
@@ -124,7 +123,6 @@ function draw() {
         sinTcosP = sinT * cosP,
         sinTsinP = sinT * sinP;
 
-    // Project 3D points onto 2D view-port.
     var near = 3,
         scaleFactor = width / 2,
         vertical_offset = height / 2,
@@ -144,6 +142,7 @@ function draw() {
     }
 
     // Draw edges
+    context.clearRect(0, 0, width, height);
     context.beginPath();
     var lastColor = context.strokeStyle = edges[0].c || "black";
     for(var i = edges.length; i-- > 0; ) {
