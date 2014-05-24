@@ -112,44 +112,44 @@ var edges = [
 ];
 
 function draw() {
-    var canvas = document.getElementById("canvas3d");
-    var width = canvas.offsetWidth;
-    var height = canvas.offsetHeight;
-    var context = canvas.getContext("2d");
+    var canvas = document.getElementById("canvas3d"),
+        width = canvas.offsetWidth,
+        height = canvas.offsetHeight,
+        context = canvas.getContext("2d");
 
     context.clearRect(0, 0, width, height);
 
-    var theta = Math.PI * azimuth / 180.0;
-    var phi = Math.PI * elevation / 180.0;
-    var cosT = Math.cos(theta);
-    var sinT = Math.sin(theta);
-    var cosP = Math.cos(phi);
-    var sinP = Math.sin(phi);
-    var cosTcosP = cosT * cosP;
-    var cosTsinP = cosT * sinP;
-    var sinTcosP = sinT * cosP;
-    var sinTsinP = sinT * sinP;
+    var theta = Math.PI * azimuth / 180.0,
+        phi = Math.PI * elevation / 180.0,
+        cosT = Math.cos(theta),
+        sinT = Math.sin(theta),
+        cosP = Math.cos(phi),
+        sinP = Math.sin(phi),
+        cosTcosP = cosT * cosP,
+        cosTsinP = cosT * sinP,
+        sinTcosP = sinT * cosP,
+        sinTsinP = sinT * sinP;
 
-    // projecting vertices onto two-dimensional view-port
-    var scaleFactor = width / 2;
-    var near = 3;
-    var horizontal_offset = width / 2;
+    // Project 3D points onto 2D view-port.
+    var near = 3,
+        scaleFactor = width / 2,
+        horizontal_offset = width / 2;
 
-    for(var i = 0; i < vertices.length; i++) {
-        var vertex = vertices[i];
-        var x0 = vertex.x;
-        var y0 = vertex.y;
-        var z0 = -vertex.z;
-        var x1 = cosT * x0 + sinT * z0;
-        var y1 = -sinTsinP * x0 + cosP * y0 + cosTsinP * z0;
-        var z1 = cosTcosP * z0 - sinTcosP * x0 - sinP * y0;
+    for(var i = vertices.length; i-- > 0; ) {
+        var vertex = vertices[i],
+            x0 = vertex.x,
+            y0 = vertex.y,
+            z0 = -vertex.z,
+            x1 = cosT * x0 + sinT * z0,
+            y1 = -sinTsinP * x0 + cosP * y0 + cosTsinP * z0,
+            z1 = cosTcosP * z0 - sinTcosP * x0 - sinP * y0,
         x1 = x1 * near / (z1 + near + zoom);
         y1 = y1 * near / (z1 + near + zoom);
         vertex.x2 = horizontal_offset + scaleFactor * x1 + 0.5;
         vertex.y2 = height / 2 - scaleFactor * y1 + 0.5;
     }
 
-    // draw edges
+    // Draw edges
     context.beginPath();
     var lastColor = context.strokeStyle = edges[0].color;
     for(var i = 0; i < edges.length; ++i) {
