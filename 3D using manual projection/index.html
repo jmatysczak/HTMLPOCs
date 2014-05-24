@@ -7,10 +7,6 @@
         <title>3D</title>
 
         <script type="text/javascript">
-var zoom = 1.5; // Zoom in/out
-var azimuth = 0; // Left/right
-var elevation = 0; // Up/Down
-
 function Edge(A, B, Color) {
     this.a = A;
     this.b = B;
@@ -111,6 +107,10 @@ var edges = [
     new Edge(28, 29, "blue")
 ];
 
+var zoom = 1.5, // Zoom in/out
+    azimuth = 0, // Left/right
+    elevation = 0; // Up/Down
+
 function draw() {
     var canvas = document.getElementById("canvas3d"),
         width = canvas.offsetWidth,
@@ -188,9 +188,7 @@ function mousemoveHandler(event) {
     }
 }
 function contextmenuHandler(event) {
-    if(event.preventDefault) {
-        event.preventDefault();
-    }
+    if(event.preventDefault) event.preventDefault();
     event.returnValue = false;
     return false;
 }
