@@ -152,17 +152,17 @@ function draw() {
     // Draw edges
     context.beginPath();
     var lastColor = context.strokeStyle = edges[0].color;
-    for(var i = 0; i < edges.length; ++i) {
-        var edge = edges[i];
-        var startPoint = vertices[edge.a];
-        var finishPoint = vertices[edge.b];
+    for(var i = edges.length; i-- > 0; ) {
+        var edge = edges[i],
+            startPoint = vertices[edge.a],
+            finishPoint = vertices[edge.b];
         if(edge.color !== lastColor) {
             context.stroke();
             context.beginPath();
             context.strokeStyle = lastColor = edge.color;
         }
-        context.moveTo(startPoint.x2,startPoint.y2);
-        context.lineTo(finishPoint.x2,finishPoint.y2);
+        context.moveTo(startPoint.x2, startPoint.y2);
+        context.lineTo(finishPoint.x2, finishPoint.y2);
     }
     context.stroke();
 }
@@ -197,7 +197,7 @@ function contextmenuHandler(event) {
 }
         </script>
     </head>
-    <body onload="draw();"oncontextmenu="contextmenuHandler(event);">
+    <body onload="draw();" oncontextmenu="contextmenuHandler(event);">
         <canvas
                 id="canvas3d"
                 width="900"
