@@ -1,15 +1,19 @@
-<html>
-	<head>
-		<title>Canvas3D</title>
-		<!--[if IE]><script type="text/javascript" src="explorercanvas/excanvas.js"></script><![endif]-->
-		<script type="text/javascript">
+<!doctype html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+
+        <title>3D</title>
+
+        <script type="text/javascript">
 var zoom = 1.5; // Zoom in/out
 var azimuth = 0; // Left/right
 var elevation = 0; // Up/Down
 
 function Point(X, Y) {
-	this.x = X;
-	this.y = Y;
+    this.x = X;
+    this.y = Y;
 }
 
 function Point3D(X, Y, Z) {
@@ -108,7 +112,7 @@ var edges = [
 	new Edge(28, 29, "blue")
 ];
 
-function draw(){  
+function draw(){
 	var canvas = document.getElementById("canvas3d");
 	var width = canvas.offsetWidth;
 	var height = canvas.offsetHeight;
@@ -187,13 +191,16 @@ function contextmenuHandler(event) {
 	event.returnValue = false;
 	return false;
 }
-		</script>
-	</head>
-	<body onload="draw();"oncontextmenu="contextmenuHandler(event);">
-		<canvas
-			id="canvas3d" width="900" height="500" style="border:1px solid gray;"
-			onmousedown="mousedownHandler(event);"
-			onmouseup="mouseupHandler(event);"
-			onmousemove="mousemoveHandler(event);"></canvas>
-	</body>
+        </script>
+    </head>
+    <body onload="draw();"oncontextmenu="contextmenuHandler(event);">
+        <canvas
+                id="canvas3d"
+                width="900"
+                height="500"
+                style="border:1px solid gray;"
+                onmousedown="mousedownHandler(event);"
+                onmouseup="mouseupHandler(event);"
+                onmousemove="mousemoveHandler(event);"></canvas>
+    </body>
 </html>
