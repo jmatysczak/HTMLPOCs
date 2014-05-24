@@ -10,7 +10,11 @@ itself.
 ##### HorizontalSinglePerspective.html
 Horizontal CoverFlow where there is a single perspective. Various amounts of Javascript are used
 to achieve variations of the CoverFlow effect.
+[Try it out.](https://rawgit.com/jmatysczak/HTMLPOCs/master/CoverFlow/HorizontalSinglePerspective.html)
 
 ##### HorizontalSinglePerspectiveJavascript.html
 Horizontal CoverFlow where there is a single perspective. Javascript is used to set the styles used
 to achieve the CoverFlow effect via requestAnimationFrame.
+
+#### Friends graph using Raphael and Springy
+An example of rendering a network of relationships using the Raphael and Springy libraries.
