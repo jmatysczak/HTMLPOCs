@@ -11,17 +11,6 @@ var zoom = 1.5; // Zoom in/out
 var azimuth = 0; // Left/right
 var elevation = 0; // Up/Down
 
-function Point(X, Y) {
-    this.x = X;
-    this.y = Y;
-}
-
-function Point3D(X, Y, Z) {
-    this.x = X;
-    this.y = Y;
-    this.z = Z;
-}
-
 function Edge(A, B, Color) {
     this.a = A;
     this.b = B;
@@ -30,44 +19,44 @@ function Edge(A, B, Color) {
 
 var vertices = [
     // Center cube.
-    {x:-0.5, -0.5, -0.5), // 0
-    {x:-0.5, -0.5, 0.5),
-    {x:-0.5, 0.5, -0.5),
-    {x:-0.5, 0.5, 0.5),
-    {x:0.5, -0.5, -0.5),
-    {x:0.5, -0.5, 0.5),
-    {x:0.5, 0.5, -0.5),
-    {x:0.5, 0.5, 0.5), // 7
+    {x:-0.5, y:-0.5, z:-0.5}, // 0
+    {x:-0.5, y:-0.5, z: 0.5},
+    {x:-0.5, y: 0.5, z:-0.5},
+    {x:-0.5, y: 0.5, z: 0.5},
+    {x: 0.5, y:-0.5, z:-0.5},
+    {x: 0.5, y:-0.5, z: 0.5},
+    {x: 0.5, y: 0.5, z:-0.5},
+    {x: 0.5, y: 0.5, z: 0.5}, // 7
 
     // Left cube.
-    {x:-1.0, -0.25, -0.25), // 8
-    {x:-1.0, -0.25, 0.25),
-    {x:-1.0, 0.25, -0.25),
-    {x:-1.0, 0.25, 0.25),
-    {x:-0.5, -0.25, -0.25),
-    {x:-0.5, -0.25, 0.25),
-    {x:-0.5, 0.25, -0.25),
-    {x:-0.5, 0.25, 0.25), // 15
+    {x:-1.0, y:-0.25, z:-0.25}, // 8
+    {x:-1.0, y:-0.25, z: 0.25},
+    {x:-1.0, y: 0.25, z:-0.25},
+    {x:-1.0, y: 0.25, z: 0.25},
+    {x:-0.5, y:-0.25, z:-0.25},
+    {x:-0.5, y:-0.25, z: 0.25},
+    {x:-0.5, y: 0.25, z:-0.25},
+    {x:-0.5, y: 0.25, z: 0.25}, // 15
 
     // Right cube.
-    {x:0.5, -0.3, -0.3), // 16
-    {x:0.5, -0.3, 0.1),
-    {x:0.5, 0.1, -0.3),
-    {x:0.5, 0.1, 0.1),
-    {x:1.0, -0.3, -0.3),
-    {x:1.0, -0.3, 0.1),
-    {x:1.0, 0.1, -0.3),
-    {x:1.0, 0.1, 0.1), //23
+    {x:0.5, y:-0.3, z:-0.3}, // 16
+    {x:0.5, y:-0.3, z: 0.1},
+    {x:0.5, y: 0.1, z:-0.3},
+    {x:0.5, y: 0.1, z: 0.1},
+    {x:1.0, y:-0.3, z:-0.3},
+    {x:1.0, y:-0.3, z: 0.1},
+    {x:1.0, y: 0.1, z:-0.3},
+    {x:1.0, y: 0.1, z: 0.1}, //23
 
     // Red line
-    {x:-0.65, 0.15, 0.15), //24
-    {x:0.25, 0.25, 0.25),
-    {x:0.9, 0, 0),
+    {x:-0.65, y:0.15, z:0.15}, //24
+    {x: 0.25, y:0.25, z:0.25},
+    {x: 0.9 , y:0   , z:0},
 
     // Blue line
-    {x:-0.9, -0.15, -0.15), //27
-    {x:-0.25, -0.4, -0.35),
-    {x:0.6, -0.2, -0.2)
+    {x:-0.9 , y:-0.15, z:-0.15}, //27
+    {x:-0.25, y:-0.4 , z:-0.35},
+    {x: 0.6 , y:-0.2 , z:-0.2}
 ];
 
 var edges = [
@@ -142,21 +131,22 @@ function draw() {
     var sinTsinP = sinT * sinP;
 
     // projecting vertices onto two-dimensional view-port
-    var points = new Array(vertices.length);
     var scaleFactor = width / 2;
     var near = 3;
     var horizontal_offset = width / 2;
 
     for(var i = 0; i < vertices.length; i++) {
-        var x0 = vertices[i].x;
-        var y0 = vertices[i].y;
-        var z0 = -vertices[i].z;
+        var vertex = vertices[i];
+        var x0 = vertex.x;
+        var y0 = vertex.y;
+        var z0 = -vertex.z;
         var x1 = cosT * x0 + sinT * z0;
         var y1 = -sinTsinP * x0 + cosP * y0 + cosTsinP * z0;
         var z1 = cosTcosP * z0 - sinTcosP * x0 - sinP * y0;
         x1 = x1 * near / (z1 + near + zoom);
         y1 = y1 * near / (z1 + near + zoom);
-        points[i] = new Point((horizontal_offset + scaleFactor * x1 + 0.5), (height / 2 - scaleFactor * y1 + 0.5));
+        vertex.x2 = horizontal_offset + scaleFactor * x1 + 0.5;
+        vertex.y2 = height / 2 - scaleFactor * y1 + 0.5;
     }
 
     // draw edges
@@ -164,15 +154,15 @@ function draw() {
     var lastColor = context.strokeStyle = edges[0].color;
     for(var i = 0; i < edges.length; ++i) {
         var edge = edges[i];
-        var startPoint = points[edge.a];
-        var finishPoint = points[edge.b];
+        var startPoint = vertices[edge.a];
+        var finishPoint = vertices[edge.b];
         if(edge.color !== lastColor) {
             context.stroke();
             context.beginPath();
             context.strokeStyle = lastColor = edge.color;
         }
-        context.moveTo(startPoint.x,startPoint.y);
-        context.lineTo(finishPoint.x,finishPoint.y);
+        context.moveTo(startPoint.x2,startPoint.y2);
+        context.lineTo(finishPoint.x2,finishPoint.y2);
     }
     context.stroke();
 }
