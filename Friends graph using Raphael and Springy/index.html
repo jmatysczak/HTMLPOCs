@@ -1,0 +1,191 @@
+<!doctype html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+
+        <title>Graph Visualization with Raphaël and Springy</title>
+
+        <style>
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+#zoom {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1;
+}
+#graph {
+    width: 100%;
+    height: 100%;
+}
+		</style>
+	</head>
+	<body onload="showGraph()">
+        <input id="zoom" type="range" min="25" max="175" step="1" value="100"/>
+        <div id="graph"></div>
+
+        <script src="data.js"></script>
+        <script src="lib/raphael.js"></script>
+		<script src="lib/springy.js"></script>
+		<script>
+Raphael.el.graphMove = function(animate) {
+	var me = this,
+        newPos = {},
+	    isText = me.type === "text",
+        personNode = me.data("personNode");
+    if(personNode) {
+        newPos[isText ? "x" : "cx"] = personNode.graphX;
+        newPos[isText ? "y" : "cy"] = personNode.graphY;
+    } else {
+		var personNode1 = me.data("personNode1"),
+		    personNode2 = me.data("personNode2");
+        newPos.path = ["M", personNode1.graphX.toFixed(3), personNode1.graphY.toFixed(3), "L", personNode2.graphX.toFixed(3), personNode2.graphY.toFixed(3)].join(" ");
+    }
+    if(animate) {
+        me.animate(newPos, 2000, "ease-in-out");
+    } else {
+        me.attr(newPos);
+    }
+	return me;
+};
+
+var EDGE_STYLE_SELECTED = {stroke:"red", "stroke-width":2},
+    EDGE_STYLE_UNSELECTED = {stroke:"black", "stroke-width":2},
+    NODE_STYLE_SELECTED = {fill:"red", stroke:"black", "stroke-width":2},
+    NODE_STYLE_UNSELECTED = {fill:"lightgrey", stroke:"black", "stroke-width":2};
+Raphael.el.graphSelect = function(selectedPersonNode) {
+	var me = this,
+	    isText = me.type === "text",
+        personNode = me.data("personNode"),
+		personNode1 = me.data("personNode1"),
+        personNode2 = me.data("personNode2");
+    if(isText) return;
+    if(personNode) me.attr(personNode === selectedPersonNode ? NODE_STYLE_SELECTED : NODE_STYLE_UNSELECTED);
+    if(personNode1) me.attr(personNode1 === selectedPersonNode || personNode2 === selectedPersonNode ? EDGE_STYLE_SELECTED : EDGE_STYLE_UNSELECTED);
+};
+
+function showGraph() {
+    var graph = new Springy.Graph(),
+        paper = Raphael("graph", window.innerWidth, window.innerHeight),
+	    layout = new Springy.Layout.ForceDirected(graph, 900, 500, 0.5),
+        numberOfPeople = 10,
+        people = graphData.nodes,
+        debug = window.location.search,
+        animate = !debug,
+        peopleNodes = [],
+        relationshipEdges = [];
+
+    people.forEach(function(person, i) {
+        if(i < numberOfPeople) {
+            peopleNodes.push(graph.newNode(person));
+        }
+    });
+
+	graphData.edges.forEach(function(relationship) {
+        if(relationship.Source < numberOfPeople && relationship.Target < numberOfPeople) {
+            relationshipEdges.push(graph.newEdge(peopleNodes[relationship.Source], peopleNodes[relationship.Target]));
+        }
+	});
+
+    paper.setStart();
+    peopleNodes.forEach(function(personNode) {
+	    paper
+            .ellipse(0, 0, 55, 35)
+            .attr(NODE_STYLE_UNSELECTED)
+            .data("personNode", personNode);
+		paper
+            .text(0, 0, personNode.data.FirstName + " " + personNode.data.LastName)
+            .data("personNode", personNode);
+    });
+
+    relationshipEdges.forEach(function(relationshipEdge) {
+        paper
+            .path("M 0 0 L 0 0")
+            .attr(EDGE_STYLE_UNSELECTED)
+            .data("personNode1", relationshipEdge.source)
+            .data("personNode2", relationshipEdge.target)
+            .toBack();
+    });
+    paper.setFinish();
+
+    var render = function() {
+        var layoutBox = layout.getBoundingBox(),
+            layoutBoxSize = layoutBox.topright.subtract(layoutBox.bottomleft);
+
+        layout.eachNode(function(node, point) {
+            var nodeLocation = point.p.subtract(layoutBox.bottomleft);
+            node.graphX = Math.floor((nodeLocation.divide(layoutBoxSize.x).x * (paper.width - 100)) + 50);
+            node.graphY = Math.floor((nodeLocation.divide(layoutBoxSize.y).y * (paper.height - 100)) + 50);
+        });
+
+        paper.forEach(function(shape) {
+            shape.graphMove(animate);
+        });
+    };
+    layout.start(debug ? render : undefined, debug ? undefined : render);
+
+    // Selection.
+    Raphael.click(function(e, x, y) {
+        var shape = paper.getElementByPoint(x, y);
+        if(shape && shape.data("personNode")) {
+            var personNode = shape.data("personNode");
+            paper.forEach(function(shape) {
+                shape.graphSelect(personNode);
+            });
+        }
+    });
+
+    // Pan and Zoom
+	var panZoomProps = {dragging:0, currentX:0, currentY:0, lastEventX:0, lastEventY:0, zoom:1, zoomOffsetX:0, zoomOffsetY:0};
+    function updateViewBox() {
+        paper.setViewBox(panZoomProps.currentX - panZoomProps.zoomOffsetX, panZoomProps.currentY - panZoomProps.zoomOffsetY, paper.width / panZoomProps.zoom, paper.height / panZoomProps.zoom, 1);
+    }
+
+	var cancelEvent = function(e) {
+		e.returnValue = false;
+		e.cancelBubble = true;
+		e.preventDefault();
+		e.stopPropagation();
+		return false;
+	};
+	Raphael.mousedown(function(e, x, y) {
+        if(e.target.id === "zoom") return;
+        panZoomProps.dragging = 1;
+        panZoomProps.lastEventX = x;
+        panZoomProps.lastEventY = y;
+        return cancelEvent(e);
+	});
+	Raphael.mousemove(function(e, x, y) {
+		if(panZoomProps.dragging) {
+            panZoomProps.currentX += (panZoomProps.lastEventX - x) / panZoomProps.zoom;
+            panZoomProps.currentY += (panZoomProps.lastEventY - y) / panZoomProps.zoom;
+			panZoomProps.lastEventX = x;
+			panZoomProps.lastEventY = y;
+			updateViewBox();
+			return cancelEvent(e);
+		}
+	});
+	Raphael.mouseup(function(e, x, y) {
+		if(panZoomProps.dragging) {
+            panZoomProps.dragging = 0;
+            return cancelEvent(e);
+        }
+	});
+
+    // Zoom
+    document.getElementById("zoom").addEventListener("change", function(e) {
+        panZoomProps.zoom = e.target.value / 100;
+        panZoomProps.zoomOffsetX = (paper.width - (paper.width * panZoomProps.zoom)) / 2 / panZoomProps.zoom;
+        panZoomProps.zoomOffsetY = (paper.height - (paper.height * panZoomProps.zoom)) / 2 / panZoomProps.zoom;
+        updateViewBox();
+    }, false);
+}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,69 @@
+---
+infochimps_schema:
+  title: Infochimps Simple Schema (ICSS)
+  version: 0.1
+  generated_at: Thu Jan 07 19:44:12 +0000 2010
+  url: "http://infochimps.org/payloads/16129.yaml"
+  description: >-
+    This is an Infochimps Simple Schema (ICSS).
+
+    It describes data on Infochimps.org and is meant to be both human
+    and machine readable.
+
+    An ICSS file is distributed with every download on Infochimps and
+    is also available by request to the above URL.
+    
+    ICSS files bundled with downloads are generated at the time the
+    download was created so they can become out of date as changes are
+    made to the data.  If this ICSS came with data you downloaded then
+    it is possible that it is already out of date.  You can get the
+    most recent version at the URL above.
+
+dataset:
+  id: 12655
+  title: Zachary's Karate Club
+  subtitle: ~
+  main_link: ~
+  url: "http://infochimps.org/datasets/zacharys-karate-club"
+  created_at: "Tue Jan 05 17:53:56 UTC 2010"
+  updated_at: "Tue Jan 05 17:53:56 UTC 2010"  
+  tags: [ graph,network,anthropology ]
+  categories: [ Social Sciences, Sports ]
+  created_by:
+    id: 341  
+    username: maegan
+    name: Maria Quejada
+    institution: Infochimps
+    main_link: ~
+    url: "http://infochimps.org/users/maegan"
+  description: >-
+    The file karate.gml contains the network of friendships between the 34 members of a karate club at a US university, as described by Wayne Zachary in 1977.  
+    
+    If you use these data in your work, please cite W. W. Zachary, An information flow model for conflict and fission in small groups, Journal of Anthropological Research 33, 452-473 (1977).
+    
+  sources:
+    
+    - id: 13452
+      title: Mark Newman
+      main_link: "http://www-personal.umich.edu/~mejn/netdata/"
+      url: "http://infochimps.org/sources/mark-newman"
+      description: >-
+        Network data: This page contains links to some network data sets compiled over the years. All of these are free for scientific use to the best of my knowledge, meaning that the original authors have already made the data freely available, or that I have consulted the authors and received permission to the post the data here, or that the data are mine. If you make use of any of these data, please cite the original sources.
+    
+  data:
+    id: 16129
+    title: Zachary's Karate Club
+    number_of_records: ~
+    url: "http://infochimps.org/payloads/16129"
+    description: >-
+      The file karate.gml contains the network of friendships between the 34 members of a karate club at a US university, as described by Wayne Zachary in 1977.  If you use these data in your work, please cite W. W. Zachary, An information flow model for conflict and fission in small groups, Journal of Anthropological Research 33, 452-473 (1977).
+      
+    fields:
+      
+    license:
+      id: 166
+      title: Mark Newman License
+      main_link: "http://www-personal.umich.edu/~mejn/netdata/"
+      url: "http://infochimps.org/licenses/mark-newman-license"            
+      description: >-
+        All of these are free for scientific use to the best of my knowledge, meaning that the original authors have already made the data freely available, or that I have consulted the authors and received permission to the post the data here, or that the data are mine. If you make use of any of these data, please cite the original sources.
