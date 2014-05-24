@@ -143,10 +143,11 @@ function draw() {
             x1 = cosT * x0 + sinT * z0,
             y1 = -sinTsinP * x0 + cosP * y0 + cosTsinP * z0,
             z1 = cosTcosP * z0 - sinTcosP * x0 - sinP * y0,
-        x1 = x1 * near / (z1 + near + zoom);
-        y1 = y1 * near / (z1 + near + zoom);
-        vertex.x2 = horizontal_offset + scaleFactor * x1 + 0.5;
-        vertex.y2 = height / 2 - scaleFactor * y1 + 0.5;
+            psf = near / (z1 + near + zoom) * scaleFactor;
+        x1 *= psf;
+        y1 *= psf;
+        vertex.x2 = horizontal_offset + x1 + 0.5;
+        vertex.y2 = height / 2 - y1 + 0.5;
     }
 
     // Draw edges
