@@ -170,7 +170,7 @@ var zooming = false;
 var lastPoint = null;
 function mousedownHandler(event) {
     zooming = event.button === 2;
-    lastPoint = {X:event.clientX, Y:event.clientY};
+    lastPoint = {x:event.clientX, y:event.clientY};
 }
 function mouseupHandler(event) {
     lastPoint = null;
@@ -178,12 +178,12 @@ function mouseupHandler(event) {
 function mousemoveHandler(event) {
     if(lastPoint) {
         if(zooming) {
-            zoom += (event.clientY - lastPoint.Y) * -0.1;
+            zoom += (event.clientY - lastPoint.y) * -0.1;
         } else {
-            azimuth -= event.clientX - lastPoint.X;
-            elevation += event.clientY - lastPoint.Y;
+            azimuth -= event.clientX - lastPoint.x;
+            elevation += event.clientY - lastPoint.y;
         }
-        lastPoint = {X:event.clientX, Y:event.clientY};
+        lastPoint = {x:event.clientX, y:event.clientY};
         draw();
     }
 }
