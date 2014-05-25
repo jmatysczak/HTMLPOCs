@@ -1,5 +1,9 @@
 ### HTML/CSS/Javascript proof of concepts/examples/investigations.
 
+#### 3D using manual projection
+An example of using the HTML5 canvas' "2d" context to display 3D.
+[Try it out.](https://rawgit.com/jmatysczak/HTMLPOCs/master/3D%20using%20manual%20projection/index.html)
+
 #### CoverFlow
 Examples of the CoverFlow effect. Each HTML file contains more information. Here is an overview:
 
