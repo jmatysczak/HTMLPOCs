@@ -124,9 +124,10 @@ function draw() {
         sinTsinP = sinT * sinP;
 
     var near = 3,
-        scaleFactor = width / 2, // Probably could use context.scale.
-        vertical_offset = height / 2, // Probably could use context.translate.
-        horizontal_offset = width / 2; // Probably could use context.translate.
+        // Probably could use context scale/translate/transform/setTransform instead of the next three.
+        scaleFactor = width / 2,
+        vertical_offset = height / 2,
+        horizontal_offset = width / 2;
 
     for(var i = vertices.length; i-- > 0; ) {
         var vertex = vertices[i],
