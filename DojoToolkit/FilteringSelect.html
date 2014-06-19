@@ -22,12 +22,13 @@
 		</style>
 	</head>
 	<body>
+        <div id="city"></div>
         <input id="cities"/>
 
         <script src="Cities_in_PA_USA.js"></script>
 		<script src="http://ajax.googleapis.com/ajax/libs/dojo/1.8.6/dojo/dojo.js"></script>
 		<script>
-            require(["dijit/form/FilteringSelect", "dojo/store/Memory", "dojo/domReady!"], function(FilteringSelect, Memory) {
+            require(["dijit/form/FilteringSelect", "dojo/dom", "dojo/store/Memory", "dojo/domReady!"], function(FilteringSelect, dom, Memory) {
                 new FilteringSelect({
                     autoComplete: true,
                     hasDownArrow: false,
@@ -38,7 +39,9 @@
                     labelFunc: function(item) {
                         return "<div class='name'>" + item.name + "</div><div class='county-name'>" + item.county_name + "</div><div class='state'>" + item.state_abbreviation + "</div>";
                     }
-                }, "cities");
+                }, "cities").on("change", function(city) {
+                    dom.byId("city").innerHTML = city;
+                });
             });
         </script>
 	</body>
