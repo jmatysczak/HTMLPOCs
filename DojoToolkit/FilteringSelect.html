@@ -7,8 +7,17 @@
         <title>Dojo Toolkit dijit.form.FilteringSelect</title>
 
         <style>
-            .name, .county-name, .state {
+            .dijitMenu {
+                border: 1px solid black;
+            }
+            .dijitMenuItem+.dijitMenuItem {
+                border-top: 1px solid black;
+            }
+            .dijitMenuItem>div {
                 display: inline-block;
+            }
+            .dijitMenuItem>div+div {
+                border-left: 1px solid black;
             }
             .name {
                 width: 300px;
@@ -18,6 +27,9 @@
             }
             .state {
                 width: 50px;
+            }
+            .dijitMenuItemHover, .dijitMenuItemSelected {
+                background-color: lightgray;
             }
 		</style>
 	</head>
