@@ -7,6 +7,18 @@
         <title>Dojo Toolkit dijit.form.FilteringSelect</title>
 
         <style>
+            .name, .county-name, .state {
+                display: inline-block;
+            }
+            .name {
+                width: 300px;
+            }
+            .county-name {
+                width: 200px;
+            }
+            .state {
+                width: 50px;
+            }
 		</style>
 	</head>
 	<body>
@@ -21,7 +33,11 @@
                     hasDownArrow: false,
                     required: false,
                     searchAttr: "name",
-                    store: new Memory({data:Cities_in_PA_USA, idProperty:"feature_id"})
+                    store: new Memory({data:Cities_in_PA_USA, idProperty:"feature_id"}),
+                    labelType: "html",
+                    labelFunc: function(item) {
+                        return "<div class='name'>" + item.name + "</div><div class='county-name'>" + item.county_name + "</div><div class='state'>" + item.state_abbreviation + "</div>";
+                    }
                 }, "cities");
             });
         </script>
