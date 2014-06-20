@@ -64,8 +64,8 @@
         <script src="Cities_in_PA_USA.js"></script>
 		<script>
             require(
-                ["dojo/_base/declare", "dojo/Deferred", "dojo/dom", "dojo/store/Memory", "dojo/store/util/QueryResults", "dijit/form/FilteringSelect", "dojo/domReady!"],
-                function(declare, Deferred, dom, Memory, QueryResults, FilteringSelect) {
+                ["dojo/_base/declare", "dojo/Deferred", "dojo/dom", "dojo/dom-construct", "dojo/store/util/QueryResults", "dijit/form/FilteringSelect", "dojo/domReady!"],
+                function(declare, Deferred, dom, domConstruct, QueryResults, FilteringSelect) {
                     var CityStore = declare([], {
                         data: Cities_in_PA_USA,
                         idProperty: "feature_id",
@@ -112,6 +112,10 @@
                             return "<div class='name'>" + item.name + "</div><div class='county-name'>" + item.county_name + "</div><div class='state'>" + item.state_abbreviation + "</div>";
                         },
                         openDropDown:function() {
+                            domConstruct.place(
+                                "<div class='dijitMenuItem'><div class='name'>Name</div><div class='county-name'>County</div><div class='state'>State</div></div>",
+                                this.dropDown.previousButton, "before"
+                            );
                             this.inherited("openDropDown", arguments);
                         }
                     }, "cities").on("change", function(city) {
