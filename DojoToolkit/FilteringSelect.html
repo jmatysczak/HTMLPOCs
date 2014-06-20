@@ -43,25 +43,72 @@
         <script src="Cities_in_PA_USA.js"></script>
 		<script src="http://ajax.googleapis.com/ajax/libs/dojo/1.8.6/dojo/dojo.js"></script>
 		<script>
-            require(["dojo/_base/declare", "dojo/dom", "dojo/store/Memory", "dijit/form/FilteringSelect", "dojo/domReady!"], function(declare, dom, Memory, FilteringSelect) {
-                var CityStore = declare([Memory], {
-                    data:Cities_in_PA_USA, idProperty:"feature_id"
-                });
+            require(
+                ["dojo/_base/declare", "dojo/Deferred", "dojo/dom", "dojo/store/Memory", "dojo/store/util/QueryResults", "dijit/form/FilteringSelect", "dojo/domReady!"],
+                function(declare, Deferred, dom, Memory, QueryResults, FilteringSelect) {
+                    var CityStore = declare([], {
+                        data: Cities_in_PA_USA,
+                        idIndex: {},
+                        idProperty: "feature_id",
+                        constructor: function() {
+                            var idIndex = this.idIndex,
+                                idProperty = this.idProperty;
+                            this.data.forEach(function(city) {
+                                idIndex[city[idProperty]] = city;
+                            });
+                        },
+                        get: function(id) {
+                            console.log("get", arguments);
+                            var city = this.idIndex[id],
+                                deferred = new Deferred();
 
-                new FilteringSelect({
-                    autoComplete: true,
-                    hasDownArrow: false,
-                    required: false,
-                    searchAttr: "name",
-                    store: new CityStore(),
-                    labelType: "html",
-                    labelFunc: function(item) {
-                        return "<div class='name'>" + item.name + "</div><div class='county-name'>" + item.county_name + "</div><div class='state'>" + item.state_abbreviation + "</div>";
-                    }
-                }, "cities").on("change", function(city) {
-                    dom.byId("city").innerHTML = city;
-                });
-            });
+                            setTimeout(function() {
+                                deferred.resolve(city);
+                            }, 500);
+
+                            return deferred;
+                        },
+                        getIdentity: function(object) {
+                            console.log("getIdentity", arguments);
+                            return object[this.idProperty];
+                        },
+                        query: function(query, options) {
+                            var cities = [],
+                                deferred = new Deferred();
+
+                            // No wildcard (*) is sent as part of the query b/c the FilteringSelect's queryExpr must be defined w/o one.
+                            // "toString" must be called b/c a RegEx is sent. But is has a toString method to get back the raw string.
+                            var name = query.name.toString().toLowerCase();
+                            this.data.forEach(function(city) {
+                                if(city.name.toLowerCase().substr(0, name.length) === name) {
+                                    cities.push(city);
+                                }
+                            });
+
+                            setTimeout(function() {
+                                deferred.resolve(cities);
+                            }, 500);
+
+                            return QueryResults(deferred);
+                        }
+                    });
+
+                    new FilteringSelect({
+                        autoComplete: true,
+                        hasDownArrow: false,
+                        queryExpr: "${0}",
+                        required: false,
+                        searchAttr: "name",
+                        store: new CityStore(),
+                        labelType: "html",
+                        labelFunc: function(item) {
+                            return "<div class='name'>" + item.name + "</div><div class='county-name'>" + item.county_name + "</div><div class='state'>" + item.state_abbreviation + "</div>";
+                        }
+                    }, "cities").on("change", function(city) {
+                        dom.byId("city").innerHTML = city;
+                    });
+                }
+            );
         </script>
 	</body>
 </html>
