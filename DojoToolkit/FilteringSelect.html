@@ -6,10 +6,25 @@
 
         <title>Dojo Toolkit dijit.form.FilteringSelect</title>
 
+        <!--
+        <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.8.6/dijit/themes/dijit.css">
+        -->
+
         <style>
+            /* .dijitInline and .dijitPopup are needed so that the dropdown is a reasonable width and not the fill width of the view port. */
+            .dijitInline {
+                display: inline-block;
+            }
+            .dijitPopup {
+                position: absolute;
+            }
+
+            /* Don't show the validation element. */
             .dijitValidationTextBox .dijitValidationContainer {
                 display: none;
             }
+
+            /* Custom styling. */
             .dijitMenu {
                 border: 1px solid black;
             }
@@ -22,6 +37,7 @@
             .dijitMenuItem>div+div {
                 border-left: 1px solid black;
             }
+
             .name {
                 width: 300px;
             }
