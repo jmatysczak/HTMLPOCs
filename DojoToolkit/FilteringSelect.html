@@ -68,25 +68,11 @@
                 function(declare, Deferred, dom, Memory, QueryResults, FilteringSelect) {
                     var CityStore = declare([], {
                         data: Cities_in_PA_USA,
-                        idIndex: {},
                         idProperty: "feature_id",
-                        constructor: function() {
-                            var idIndex = this.idIndex,
-                                idProperty = this.idProperty;
-                            this.data.forEach(function(city) {
-                                idIndex[city[idProperty]] = city;
-                            });
-                        },
-                        get: function(id) {
-                            console.log("get", arguments);
-                            var city = this.idIndex[id],
-                                deferred = new Deferred();
-
-                            setTimeout(function() {
-                                deferred.resolve(city);
-                            }, 500);
-
-                            return deferred;
+                        get:function() {
+                            // Not used, but needed b/c there is dojo code that uses this method to determine the type of data repository.
+                            console.log("Error: 'get' called, but it is not implemented.", arguments);
+                            throw "Developer error: 'get' not implemented.";
                         },
                         getIdentity: function(object) {
                             console.log("getIdentity", arguments);
