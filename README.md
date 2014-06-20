@@ -22,7 +22,10 @@ Horizontal CoverFlow where there is a single perspective. Javascript is used to 
 to achieve the CoverFlow effect via requestAnimationFrame.
 [Try it out.](https://rawgit.com/jmatysczak/HTMLPOCs/master/CoverFlow/HorizontalSinglePerspectiveJavascript.html)
 
-#### DojoToolkit/FilteringSelect.html
+#### DojoToolkit
+Dojo Toolkit examples and proof of concepts.
+
+##### FilteringSelect.html
 A POC using dijit/form/FilteringSelect with a mutli-column dropdown display and column headers.
 
 #### Friends graph using Raphael and Springy
