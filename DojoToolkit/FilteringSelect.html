@@ -132,7 +132,7 @@
                             return "<div class='name'>" + item.name + "</div><div class='county-name'>" + item.county_name + "</div><div class='state'>" + item.state_abbreviation + "</div>";
                         },
                         labelType: "html",
-                        maxHeight: 400,
+                        maxHeight: 400, /* If maxHeight is -1 it uses the entire viewport but doesn't account for the custom column header row. A fixed height should be fine. */
                         openDropDown:function() {
                             this.inherited("openDropDown", arguments);
                             if(!this.dropDown.containerNode.previousSibling) {
@@ -142,7 +142,7 @@
                                 );
                             }
                         },
-                        queryExpr: "${0}",
+                        queryExpr: "${0}", /* This is set to alleviate the data store from having to remove any wildcard place holders. */
                         required: false,
                         searchAttr: "name",
                         store: new CityStore()
