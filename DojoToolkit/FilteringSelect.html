@@ -11,7 +11,7 @@
         -->
 
         <style>
-            /* .dijitInline and .dijitPopup are needed so that the dropdown is a reasonable width and not the fill width of the view port. */
+            /* .dijitInline and .dijitPopup are needed so that the dropdown is a reasonable width and not the full width of the view port. */
             .dijitInline {
                 display: inline-block;
             }
@@ -96,22 +96,28 @@
                         idProperty: "feature_id",
                         get:function() {
                             // Not used, but needed b/c there is dojo code that uses this method to determine the type of data repository.
-                            console.log("Error: 'get' called, but it is not implemented.", arguments);
-                            throw "Developer error: 'get' not implemented.";
+                            console.log("Error: 'get' is not implemented. If it is needed, implement it.", arguments);
+                            throw "'get' is not implemented. If it is needed, implement it.";
                         },
                         getIdentity: function(object) {
                             console.log("getIdentity", arguments);
+
                             return object[this.idProperty];
                         },
                         query: function(query, options) {
                             console.log("query", arguments);
+
                             var cities = [],
                                 deferred = new Deferred();
 
-                            // No wildcard (*) is sent as part of the query b/c the FilteringSelect's queryExpr must be defined w/o one.
+                            // This code assumes that no wildcard (*) is sent as part of the query.
+                            // So the FilteringSelect's queryExpr must be defined w/o a wildcard.
                             // "toString" must be called b/c a RegEx is sent. But is has a toString method to get back the raw string.
                             var name = query.name.toString().toLowerCase();
                             this.data.forEach(function(city) {
+                                // This is just an example implementation (the "if").
+                                // The real implementation will get sent to a server to be processed.
+                                // So I really want to use the string version of query.name.
                                 if(city.name.toLowerCase().substr(0, name.length) === name) {
                                     cities.push(city);
                                 }
