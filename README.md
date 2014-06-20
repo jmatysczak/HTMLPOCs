@@ -27,6 +27,7 @@ Dojo Toolkit examples and proof of concepts.
 
 ##### FilteringSelect.html
 A POC using dijit/form/FilteringSelect with a mutli-column dropdown display and column headers.
+[Try it out.](https://rawgit.com/jmatysczak/HTMLPOCs/master/DojoToolkit/FilteringSelect.html)
 
 #### Friends graph using Raphael and Springy
 An example of rendering a network of relationships using the Raphael and Springy libraries.
