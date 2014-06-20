@@ -73,6 +73,7 @@
                             return object[this.idProperty];
                         },
                         query: function(query, options) {
+                            console.log("query", arguments);
                             var cities = [],
                                 deferred = new Deferred();
 
