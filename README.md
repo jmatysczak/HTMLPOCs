@@ -22,6 +22,9 @@ Horizontal CoverFlow where there is a single perspective. Javascript is used to 
 to achieve the CoverFlow effect via requestAnimationFrame.
 [Try it out.](https://rawgit.com/jmatysczak/HTMLPOCs/master/CoverFlow/HorizontalSinglePerspectiveJavascript.html)
 
+#### DojoToolkit/FilteringSelect.html
+A POC using dijit/form/FilteringSelect with a mutli-column dropdown display and column headers.
+
 #### Friends graph using Raphael and Springy
 An example of rendering a network of relationships using the Raphael and Springy libraries.
 [Try it out.](https://rawgit.com/jmatysczak/HTMLPOCs/master/Friends%20graph%20using%20Raphael%20and%20Springy/index.html)
