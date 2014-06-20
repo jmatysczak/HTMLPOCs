@@ -128,14 +128,11 @@
                     new FilteringSelect({
                         autoComplete: true,
                         hasDownArrow: false,
-                        queryExpr: "${0}",
-                        required: false,
-                        searchAttr: "name",
-                        store: new CityStore(),
-                        labelType: "html",
                         labelFunc: function(item) {
                             return "<div class='name'>" + item.name + "</div><div class='county-name'>" + item.county_name + "</div><div class='state'>" + item.state_abbreviation + "</div>";
                         },
+                        labelType: "html",
+                        maxHeight: 400,
                         openDropDown:function() {
                             this.inherited("openDropDown", arguments);
                             if(!this.dropDown.containerNode.previousSibling) {
@@ -144,7 +141,11 @@
                                     this.dropDown.containerNode, "before"
                                 );
                             }
-                        }
+                        },
+                        queryExpr: "${0}",
+                        required: false,
+                        searchAttr: "name",
+                        store: new CityStore()
                     }, "cities").on("change", function(city) {
                         dom.byId("city").innerHTML = city;
                     });
