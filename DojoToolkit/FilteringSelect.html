@@ -24,12 +24,29 @@
                 display: none;
             }
 
+            /* Put background frames in the right place. */
+            .dijitBackgroundIframe {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                z-index: -1;
+                border: 0;
+                padding: 0;
+                margin: 0;
+            }
+
             /* Custom styling. */
             .dijitMenu {
                 border: 1px solid black;
+                border-top: 0;
             }
-            .dijitMenuItem+.dijitMenuItem {
+            .dijitMenuItem {
                 border-top: 1px solid black;
+            }
+            .dijitMenuPreviousButton + .dijitMenuItem {
+                border-top: 0;
             }
             .dijitMenuItem>div {
                 display: inline-block;
@@ -39,7 +56,10 @@
             }
 
             .dijitMenuHead {
+                border: 1px solid black;
                 font-weight: bold;
+            }
+            .dijitMenuHead>div {
                 text-align: center;
             }
 
@@ -117,11 +137,13 @@
                             return "<div class='name'>" + item.name + "</div><div class='county-name'>" + item.county_name + "</div><div class='state'>" + item.state_abbreviation + "</div>";
                         },
                         openDropDown:function() {
-                            domConstruct.place(
-                                "<div class='dijitMenuItem dijitMenuHead'><div class='name'>Name</div><div class='county-name'>County</div><div class='state'>State</div></div>",
-                                this.dropDown.previousButton, "before"
-                            );
                             this.inherited("openDropDown", arguments);
+                            if(!this.dropDown.containerNode.previousSibling) {
+                                domConstruct.place(
+                                    "<div class='dijitMenuItem dijitMenuHead'><div class='name'>Name</div><div class='county-name'>County</div><div class='state'>State</div></div>",
+                                    this.dropDown.containerNode, "before"
+                                );
+                            }
                         }
                     }, "cities").on("change", function(city) {
                         dom.byId("city").innerHTML = city;
