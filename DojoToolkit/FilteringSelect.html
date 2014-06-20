@@ -43,13 +43,17 @@
         <script src="Cities_in_PA_USA.js"></script>
 		<script src="http://ajax.googleapis.com/ajax/libs/dojo/1.8.6/dojo/dojo.js"></script>
 		<script>
-            require(["dijit/form/FilteringSelect", "dojo/dom", "dojo/store/Memory", "dojo/domReady!"], function(FilteringSelect, dom, Memory) {
+            require(["dojo/_base/declare", "dojo/dom", "dojo/store/Memory", "dijit/form/FilteringSelect", "dojo/domReady!"], function(declare, dom, Memory, FilteringSelect) {
+                var CityStore = declare([Memory], {
+                    data:Cities_in_PA_USA, idProperty:"feature_id"
+                });
+
                 new FilteringSelect({
                     autoComplete: true,
                     hasDownArrow: false,
                     required: false,
                     searchAttr: "name",
-                    store: new Memory({data:Cities_in_PA_USA, idProperty:"feature_id"}),
+                    store: new CityStore(),
                     labelType: "html",
                     labelFunc: function(item) {
                         return "<div class='name'>" + item.name + "</div><div class='county-name'>" + item.county_name + "</div><div class='state'>" + item.state_abbreviation + "</div>";
