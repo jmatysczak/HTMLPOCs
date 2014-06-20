@@ -38,6 +38,11 @@
                 border-left: 1px solid black;
             }
 
+            .dijitMenuHead {
+                font-weight: bold;
+                text-align: center;
+            }
+
             .name {
                 width: 300px;
             }
@@ -113,7 +118,7 @@
                         },
                         openDropDown:function() {
                             domConstruct.place(
-                                "<div class='dijitMenuItem'><div class='name'>Name</div><div class='county-name'>County</div><div class='state'>State</div></div>",
+                                "<div class='dijitMenuItem dijitMenuHead'><div class='name'>Name</div><div class='county-name'>County</div><div class='state'>State</div></div>",
                                 this.dropDown.previousButton, "before"
                             );
                             this.inherited("openDropDown", arguments);
