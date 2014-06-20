@@ -110,6 +110,9 @@
                         labelType: "html",
                         labelFunc: function(item) {
                             return "<div class='name'>" + item.name + "</div><div class='county-name'>" + item.county_name + "</div><div class='state'>" + item.state_abbreviation + "</div>";
+                        },
+                        openDropDown:function() {
+                            this.inherited("openDropDown", arguments);
                         }
                     }, "cities").on("change", function(city) {
                         dom.byId("city").innerHTML = city;
